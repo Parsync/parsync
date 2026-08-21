@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parsync &#8212; Pare the process. Automate in sync.</title>
+<meta name="description" content="Business process re-engineering and automation for SMBs. We pare your operations to their essential form, then sync them to run themselves. You get the hours back for the work only you can do. The operational layer AI runs on.">
+<link rel="canonical" href="https://parsync.io">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#081116">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Parsync">
+<meta property="og:url" content="https://parsync.io">
+<meta property="og:title" content="Parsync &#8212; Pare the process. Automate in sync.">
+<meta property="og:description" content="Business process re-engineering and automation for SMBs. We pare your operations to their essential form, then sync them to run themselves. You get the hours back for the work only you can do. The operational layer AI runs on.">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Parsync &#8212; Pare the process. Automate in sync.">
+<meta name="twitter:description" content="Business process re-engineering and automation for SMBs. We pare your operations to their essential form, then sync them to run themselves. You get the hours back for the work only you can do. The operational layer AI runs on.">
+
+<!-- Temporary mark. Swap for the final logomark when it ships. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23081116'/%3E%3Cg fill='%23508FFF'%3E%3Crect x='7' y='6' width='3.4' height='20'/%3E%3Crect x='7' y='6' width='16' height='3.4'/%3E%3Crect x='19.6' y='6' width='3.4' height='11'/%3E%3Crect x='7' y='13.6' width='16' height='3.4'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap">
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root{
+    --navy:#081116;
+    --blue:#508FFF;
+    --blue-tint:#7CABFF;      /* --blue at 75% over white, hover only */
+    --white:#FFFFFF;
+
+    --w-92:rgba(255,255,255,.92);
+    --w-72:rgba(255,255,255,.72);
+    --w-58:rgba(255,255,255,.58);
+    --rule:rgba(255,255,255,.14);
+    --rule-strong:rgba(255,255,255,.26);
+
+    --n-72:rgba(8,17,22,.72);
+    --n-rule:rgba(8,17,22,.14);
+
+    --blue-04:rgba(80,143,255,.04);
+    --blue-05:rgba(80,143,255,.05);
+    --blue-08:rgba(80,143,255,.08);
+
+    --measure:65ch;
+    --radius:4px;
+    --nav-h:112px;
+    --gutter:clamp(1.25rem, 4vw, 3rem);
+    --section-y:clamp(4.5rem, 9vw, 8.5rem);
+  }
+  @media (min-width:48rem){ :root{ --nav-h:70px; } }
+
+  /* ---------- Base ---------- */
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--w-92);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:1.0625rem;
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (min-width:48rem){ body{font-size:1.125rem} }
+
+  h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.02em;line-height:1.06;color:var(--white)}
+  p{margin:0}
+  svg{display:block;max-width:100%}
+  a{color:inherit}
+
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
+
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+  .skip{
+    position:absolute;left:var(--gutter);top:.75rem;z-index:80;
+    transform:translateY(-200%);
+    background:var(--blue);color:var(--navy);
+    padding:.7rem 1.1rem;border-radius:var(--radius);
+    font-size:.875rem;font-weight:600;text-decoration:none;
+  }
+  .skip:focus{transform:none}
+
+  /* ---------- Layout ---------- */
+  .wrap{width:100%;max-width:1220px;margin:0 auto;padding-inline:var(--gutter)}
+  .section{padding-block:var(--section-y);border-top:1px solid var(--rule)}
+  .section--tinted{background:var(--blue-04)}
+  .section--light{background:var(--white);color:var(--n-72);border-top:0}
+  .section--light h2,.section--light h3{color:var(--navy)}
+  [id]{scroll-margin-top:calc(var(--nav-h) + 1.5rem)}
+
+  .measure{max-width:var(--measure)}
+  .stack>*+*{margin-top:1.25rem}
+
+  /* ---------- Eyebrow / section label ---------- */
+  .label{
+    display:flex;align-items:flex-start;gap:.75rem;
+    margin:0;
+    font-size:.75rem;font-weight:600;line-height:1.3;
+    letter-spacing:.16em;text-transform:uppercase;
+    color:var(--w-58);
+  }
+  .section--light .label{color:var(--n-72)}
+  /* the rule tracks the first line, so wrapped labels stay aligned */
+  .label::before{content:"";flex:none;width:28px;height:1px;margin-top:.6em;background:var(--blue)}
+
+  /* ---------- Buttons and links ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:48px;padding:.6rem 1.5rem;
+    font-size:.9375rem;font-weight:600;letter-spacing:.01em;
+    text-decoration:none;border:1px solid transparent;border-radius:var(--radius);
+    background:var(--blue);color:var(--navy);
+    transition:background 200ms ease,color 200ms ease,border-color 200ms ease;
+  }
+  .btn:hover{background:var(--blue-tint)}
+  .btn:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+  .btn--nav{min-height:44px;padding:.4rem 1.1rem;font-size:.875rem}
+
+  .link-quiet{
+    display:inline-flex;align-items:center;gap:.5rem;min-height:44px;
+    color:var(--w-72);text-decoration:none;
+    border-bottom:1px solid var(--rule-strong);
+    font-size:.9375rem;font-weight:600;
+    transition:color 200ms ease,border-color 200ms ease;
+  }
+  .link-quiet:hover{color:var(--white);border-color:var(--blue)}
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:60;
+    background:var(--navy);
+    border-bottom:1px solid var(--rule);
+    transition:border-color 200ms ease,background 200ms ease;
+  }
+  .nav.is-scrolled{border-bottom-color:var(--rule-strong);background:rgba(8,17,22,.96)}
+  @supports (backdrop-filter:blur(2px)){
+    .nav.is-scrolled{backdrop-filter:saturate(140%) blur(6px)}
+  }
+  .nav__inner{
+    display:grid;grid-template-columns:1fr auto;align-items:center;
+    gap:.4rem 1rem;padding-block:.5rem;
+  }
+  .wordmark{
+    font-size:1.25rem;font-weight:800;letter-spacing:-.02em;
+    color:var(--white);text-decoration:none;
+  }
+  .nav__inner .wordmark{
+    grid-column:1;grid-row:1;
+    display:inline-flex;align-items:center;min-height:44px;
+  }
+  .nav__inner .btn--nav{grid-column:2;grid-row:1;justify-self:end}
+  .nav__links{
+    grid-column:1 / -1;grid-row:2;
+    display:flex;align-items:center;gap:1.25rem;
+  }
+  .nav__links a{
+    display:inline-flex;align-items:center;min-height:44px;
+    font-size:.875rem;font-weight:600;color:var(--w-72);text-decoration:none;
+    transition:color 200ms ease;
+  }
+  .nav__links a:hover{color:var(--white)}
+  @media (min-width:48rem){
+    .nav__inner{grid-template-columns:auto 1fr auto;padding-block:.6rem}
+    .nav__inner .wordmark,
+    .nav__inner .btn--nav,
+    .nav__links{grid-row:1}
+    .nav__inner .btn--nav{grid-column:3}
+    .nav__links{grid-column:2;justify-content:center;gap:2rem}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    display:flex;align-items:center;
+    min-height:100vh;
+    min-height:calc(100svh - var(--nav-h));
+    padding-block:clamp(3.5rem,9vw,6rem);
+    background-image:radial-gradient(80% 60% at 78% 12%,var(--blue-08),transparent 70%);
+  }
+  .hero__grid{display:grid;gap:clamp(2.75rem,6vw,4.5rem)}
+  @media (min-width:64rem){
+    .hero__grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:center}
+  }
+  .hero h1{
+    margin-top:clamp(1.5rem,3vw,2rem);
+    font-size:clamp(2.4rem,6.6vw,4.5rem);
+    max-width:20ch;
+  }
+  .hero__sub{
+    margin-top:clamp(1.5rem,3vw,2rem);
+    max-width:56ch;
+    font-size:clamp(1.0625rem,1.9vw,1.375rem);
+    font-weight:300;
+    color:var(--w-72);
+  }
+  .hero__actions{
+    display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;
+    margin-top:clamp(2rem,4vw,2.75rem);
+  }
+
+  /* ---------- Hero motif ---------- */
+  .motif{display:none}
+  @media (min-width:48rem){
+    .motif{display:block;border:1px solid var(--rule);border-radius:var(--radius);padding:1rem}
+  }
+  .motif svg{width:100%;height:auto}
+  .motif line{stroke:var(--blue);stroke-width:1.25;stroke-linecap:butt}
+  .motif rect.node{fill:var(--blue)}
+  .motif .cut{opacity:0;transform:translateX(-16px)}
+  .motif .axis{stroke-dasharray:260;stroke-dashoffset:0;stroke-width:1}
+  .motif .keep-node{opacity:1}
+
+  /* ---------- The problem ---------- */
+  .problem__grid{display:grid;gap:clamp(2rem,5vw,3.5rem)}
+  @media (min-width:64rem){
+    .problem__grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
+  }
+  .problem__lead{
+    font-size:clamp(1.25rem,2.4vw,1.75rem);
+    font-weight:300;line-height:1.45;color:var(--white);
+  }
+
+  /* ---------- The question ---------- */
+  .question__ask{
+    font-size:clamp(1.75rem,4.6vw,3.25rem);
+    font-weight:800;letter-spacing:-.02em;line-height:1.12;
+    max-width:30ch;color:var(--white);
+  }
+  .question__ask strong{color:var(--blue);font-weight:800}
+  .question__body{
+    margin-top:clamp(2rem,4vw,3rem);
+    padding-top:clamp(2rem,4vw,3rem);
+    border-top:1px solid var(--rule);
+    display:grid;gap:1.5rem;
+  }
+  @media (min-width:64rem){
+    .question__body{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,4vw,4rem)}
+  }
+  .question__body p{color:var(--w-72);max-width:52ch}
+
+  /* ---------- Method ---------- */
+  .method__flow{
+    display:grid;gap:clamp(1.5rem,3vw,2rem);
+    margin-top:clamp(1.75rem,3.5vw,2.75rem);
+  }
+  @media (min-width:64rem){
+    .method__flow{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch}
+  }
+  .phase{
+    border:1px solid var(--rule);border-radius:var(--radius);
+    padding:clamp(1.5rem,3.5vw,2.5rem);
+    background:var(--blue-04);
+  }
+  .phase__num{
+    display:block;font-size:.8125rem;font-weight:600;letter-spacing:.18em;
+    color:var(--blue);
+  }
+  .phase h3{margin-top:.85rem;font-size:clamp(1.75rem,3.2vw,2.5rem)}
+  .phase__def{
+    margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--rule);
+    font-size:1.0625rem;font-weight:600;color:var(--white);
+  }
+  .phase__body{margin-top:.9rem;color:var(--w-72)}
+  .connector{
+    display:flex;align-items:center;justify-content:center;
+    padding-block:.25rem;color:var(--blue);
+  }
+  .connector svg{transform:rotate(90deg);width:28px;height:28px}
+  @media (min-width:64rem){
+    .connector{padding-block:0;padding-inline:clamp(1rem,2vw,2rem)}
+    .connector svg{transform:none;width:56px;height:28px}
+  }
+  .tagline{
+    margin-top:clamp(2.5rem,5vw,4rem);
+    padding-top:clamp(1.5rem,3vw,2rem);
+    border-top:1px solid var(--rule-strong);
+    font-size:clamp(1.125rem,2.4vw,1.625rem);
+    font-weight:600;letter-spacing:-.01em;color:var(--white);
+  }
+
+  /* ---------- The AI era ---------- */
+  .ai__grid{
+    display:grid;gap:clamp(1.5rem,4vw,3rem);
+    margin-top:clamp(1.75rem,3.5vw,2.75rem);
+  }
+  @media (min-width:64rem){
+    .ai__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  .ai__grid p{color:var(--w-72);padding-top:1.25rem;border-top:1px solid var(--rule)}
+  .ai__grid p:last-child{color:var(--white);font-weight:600}
+
+  /* ---------- Services (light) ---------- */
+  .services__grid{
+    display:grid;gap:1px;
+    margin-top:clamp(2rem,4vw,3rem);
+    background:var(--n-rule);
+    border:1px solid var(--n-rule);border-radius:var(--radius);
+  }
+  @media (min-width:48rem){
+    .services__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  .card{
+    background:var(--white);
+    border-top:3px solid transparent;
+    padding:clamp(1.5rem,3.5vw,2.5rem);
+    transition:background 200ms ease;
+  }
+  .card:hover{background:var(--blue-05)}
+  .card svg{stroke:var(--blue);fill:none;stroke-width:1.5;width:40px;height:40px}
+  .card h3{margin-top:1.5rem;font-size:clamp(1.25rem,2.2vw,1.5rem)}
+  .card p{margin-top:.75rem;max-width:38ch}
+  .card--flagship{border-top-color:var(--blue)}
+  .card__tag{
+    display:inline-block;
+    padding:.3rem .6rem;border-radius:2px;
+    background:var(--blue);color:var(--navy);
+    font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  }
+
+  /* ---------- Why Parsync ---------- */
+  .why__grid{display:grid;gap:clamp(2rem,5vw,4rem)}
+  @media (min-width:64rem){
+    .why__grid{grid-template-columns:minmax(0,4fr) minmax(0,8fr);align-items:start}
+  }
+  .why__body>*+*{margin-top:1.5rem}
+  .why__lead{
+    font-size:clamp(1.25rem,2.4vw,1.75rem);
+    font-weight:300;line-height:1.45;color:var(--white);
+  }
+  .why__pivot{font-weight:600;color:var(--blue)}
+  .why__body>.why__close{
+    margin-top:clamp(1.75rem,3.5vw,2.5rem);
+    padding-left:clamp(1rem,2vw,1.5rem);
+    border-left:2px solid var(--blue);
+    font-size:clamp(1.125rem,2.2vw,1.5rem);
+    font-weight:600;letter-spacing:-.01em;color:var(--white);
+  }
+
+  /* ---------- Final CTA ---------- */
+  .cta{text-align:center;padding-block:clamp(5.5rem,12vw,10rem)}
+  .cta h2{font-size:clamp(2.25rem,6.4vw,4.25rem)}
+  .cta p{
+    margin:clamp(1.25rem,3vw,1.75rem) auto 0;max-width:52ch;
+    font-size:clamp(1.0625rem,1.8vw,1.25rem);font-weight:300;color:var(--w-72);
+  }
+  .cta__actions{
+    display:flex;flex-direction:column;align-items:center;gap:1.25rem;
+    margin-top:clamp(2rem,4vw,2.75rem);
+  }
+
+  /* ---------- Footer ---------- */
+  .footer{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,5vw,3.5rem)}
+  .footer__grid{
+    display:grid;gap:1.5rem 2.5rem;align-items:start;
+    font-size:.9375rem;color:var(--w-58);
+  }
+  @media (min-width:64rem){
+    .footer__grid{grid-template-columns:auto 1fr auto;align-items:center}
+  }
+  .footer__tagline{font-weight:600;color:var(--w-72)}
+  .footer__meta{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem}
+  .footer a{
+    display:inline-flex;align-items:center;min-height:44px;
+    color:var(--w-72);text-decoration:none;
+    transition:color 200ms ease;
+  }
+  .footer a:hover{color:var(--white)}
+  .footer .wordmark{color:var(--white)}
+  .footer__handle{letter-spacing:.02em}
+
+  /* ---------- Motion ---------- */
+  @media (prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth}
+
+    .js .reveal{opacity:0;transform:translateY(14px);transition:opacity 280ms ease-out,transform 280ms ease-out}
+    .js .reveal.is-in{opacity:1;transform:none}
+
+    .motif .cut{animation:pare-out 1000ms ease-in-out 400ms both}
+    .motif .keep{animation:pare-align 900ms cubic-bezier(.22,.61,.36,1) both}
+    .motif .keep:nth-of-type(1){animation-delay:600ms}
+    .motif .keep:nth-of-type(2){animation-delay:760ms}
+    .motif .keep:nth-of-type(3){animation-delay:920ms}
+    .motif .axis{animation:draw 800ms ease-out 1150ms both}
+    .motif .keep-node{animation:fade-in 500ms ease-out 1500ms both}
+
+    @keyframes pare-out{
+      0%{opacity:.5;transform:none}
+      45%{opacity:.5;transform:none}
+      100%{opacity:0;transform:translateX(-16px)}
+    }
+    @keyframes pare-align{
+      0%{opacity:.5;transform:translateX(var(--x,0))}
+      100%{opacity:1;transform:none}
+    }
+    @keyframes draw{ from{stroke-dashoffset:260} to{stroke-dashoffset:0} }
+    @keyframes fade-in{ from{opacity:0} to{opacity:1} }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+</style>
+<script>document.documentElement.classList.add("js");</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="wordmark" href="#top" aria-label="Parsync, back to top">Parsync</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#method">Method</a>
+      <a href="#services">Services</a>
+      <a href="#why">Why Parsync</a>
+    </nav>
+    <a class="btn btn--nav" data-audit-link href="https://calendly.com/parsync/process-audit">Book a process audit</a>
+  </div>
+</header>
+
+<main id="main">
+  <!-- 1. Hero -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <div>
+        <p class="label">AI-Native Business Process Re-Engineering</p>
+        <h1 id="hero-title">Don't automate a broken process. Pare it first.</h1>
+        <p class="hero__sub">Parsync re-engineers the operational layer of your business &#8212; removing what doesn't belong, syncing what remains to run itself. You get the hours back for the work only you can do.</p>
+        <div class="hero__actions">
+          <a class="btn" data-audit-link href="https://calendly.com/parsync/process-audit">Book a process audit</a>
+          <a class="link-quiet" href="#method">See the method <span aria-hidden="true">&#8595;</span></a>
+        </div>
+      </div>
+
+      <div class="motif" aria-hidden="true">
+        <svg viewBox="0 0 480 340">
+          <defs>
+            <pattern id="grid-dots" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="#508FFF" opacity=".2"></circle>
+            </pattern>
+          </defs>
+          <rect width="480" height="340" fill="url(#grid-dots)"></rect>
+
+          <g>
+            <line class="cut" x1="88" y1="62" x2="318" y2="62"></line>
+            <line class="cut" x1="64" y1="146" x2="272" y2="146"></line>
+            <line class="cut" x1="104" y1="204" x2="336" y2="204"></line>
+            <line class="cut" x1="72" y1="288" x2="296" y2="288"></line>
+          </g>
+
+          <line class="keep" style="--x:-26px" x1="64" y1="110" x2="400" y2="110"></line>
+          <line class="keep" style="--x:34px" x1="64" y1="170" x2="400" y2="170"></line>
+          <line class="keep" style="--x:-18px" x1="64" y1="230" x2="400" y2="230"></line>
+
+          <line class="axis" x1="400" y1="60" x2="400" y2="280"></line>
+
+          <g class="keep-node">
+            <rect class="node" x="397" y="107" width="6" height="6"></rect>
+            <rect class="node" x="397" y="167" width="6" height="6"></rect>
+            <rect class="node" x="397" y="227" width="6" height="6"></rect>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. The problem -->
+  <section class="section" aria-labelledby="problem-title">
+    <div class="wrap problem__grid reveal">
+      <h2 class="label" id="problem-title">The real cost of inefficiency</h2>
+      <div class="stack">
+        <p class="problem__lead">Most businesses are running processes that should not exist. Not because the people are careless, but because the process was never designed &#8212; it just accumulated. A spreadsheet that became a system. A workaround that became a workflow. A task nobody questions because nobody remembers why it started.</p>
+        <p class="measure">This is the real cost of inefficiency. Not slow software. Not the wrong tool. Processes that were never questioned and are now quietly consuming hours, headcount, and revenue every single week.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. The question -->
+  <section class="section section--tinted" aria-labelledby="question-title">
+    <div class="wrap reveal">
+      <h2 class="sr-only" id="question-title">The question</h2>
+      <p class="question__ask">The question most automation tools never ask: <strong>Should this process exist at all?</strong></p>
+      <div class="question__body">
+        <p>Parsync starts there. We pare your operations to their essential form &#8212; cutting every step that doesn't create value. We sync it so it runs clean, automatically, indefinitely.</p>
+        <p>Business process re-engineering built for businesses that can't afford to keep adding software to problems that need removing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Method -->
+  <section class="section" id="method" aria-labelledby="method-title">
+    <div class="wrap reveal">
+      <h2 class="label" id="method-title">The method</h2>
+      <div class="method__flow">
+        <article class="phase">
+          <span class="phase__num">01</span>
+          <h3>Pare</h3>
+          <p class="phase__def">To cut to essentials.</p>
+          <p class="phase__body">A systematic review of every step in your operational workflow. We remove everything that does not create value, challenge every assumption, and ask whether each process should exist before we ask how to improve it.</p>
+        </article>
+
+        <div class="connector" aria-hidden="true">
+          <svg viewBox="0 0 56 28"><path d="M0 14h48M40 7l8 7-8 7" fill="none" stroke="currentColor" stroke-width="1.25"></path></svg>
+        </div>
+
+        <article class="phase">
+          <span class="phase__num">02</span>
+          <h3>Sync</h3>
+          <p class="phase__def">To keep in reliable step.</p>
+          <p class="phase__body">What remains is structured, mapped, and automated to run in lockstep &#8212; across tools and teams, without a person standing in the middle holding it together.</p>
+        </article>
+      </div>
+      <p class="tagline">Pare the process. Automate in sync.</p>
+    </div>
+  </section>
+
+  <!-- 5. The AI era -->
+  <section class="section section--tinted" aria-labelledby="ai-title">
+    <div class="wrap reveal">
+      <h2 class="label" id="ai-title">Built for the AI era</h2>
+      <div class="ai__grid">
+        <p>Every SMB is being told to adopt AI or get left behind. But AI amplifies what's already there &#8212; feed it a broken process, you get a broken process moving faster.</p>
+        <p>The businesses built for the AI era aren't the ones with the most AI tools. They're the ones who pared first. Clean processes, structured data, operations that run without intervention: that is what AI requires to do anything useful.</p>
+        <p>Parsync builds that foundation. Not AI tools. The operational layer AI runs on.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Services -->
+  <section class="section section--light" id="services" aria-labelledby="services-title">
+    <div class="wrap reveal">
+      <h2 class="label" id="services-title">What we do</h2>
+
+      <div class="services__grid">
+        <article class="card card--flagship">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M4 9h24M4 20h9M19 20h9M4 31h24"></path>
+            <path d="M34 5v30"></path>
+          </svg>
+          <h3>Business process re-engineering</h3>
+          <p>Redesign how your business operates before you automate anything.</p>
+          <p><span class="card__tag">Where every engagement starts</span></p>
+        </article>
+
+        <article class="card">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="3" y="26" width="8" height="8"></rect>
+            <rect x="16" y="16" width="8" height="8"></rect>
+            <rect x="29" y="6" width="8" height="8"></rect>
+            <path d="M11 30h9v-6M24 20h9v-6"></path>
+          </svg>
+          <h3>Workflow automation</h3>
+          <p>Eliminate manual processes that drain time, money, and attention.</p>
+        </article>
+
+        <article class="card">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="4" y="6" width="32" height="7"></rect>
+            <rect x="4" y="16.5" width="32" height="7"></rect>
+            <rect x="4" y="27" width="32" height="7"></rect>
+            <path d="M11 13v3.5M11 23.5v3.5"></path>
+          </svg>
+          <h3>Cloud solutions</h3>
+          <p>Infrastructure that scales with your business.</p>
+        </article>
+
+        <article class="card">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="3" y="6" width="23" height="17"></rect>
+            <path d="M3 11h23"></path>
+            <rect x="27" y="15" width="10" height="19"></rect>
+            <path d="M27 20h10"></path>
+          </svg>
+          <h3>Web &amp; mobile development</h3>
+          <p>Custom applications built for performance and integration.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Why Parsync -->
+  <section class="section" id="why" aria-labelledby="why-title">
+    <div class="wrap why__grid reveal">
+      <h2 class="label" id="why-title">Why Parsync</h2>
+      <div class="why__body">
+        <p class="why__lead">Most businesses automate their processes before they've questioned them. The result: broken workflows, running faster.</p>
+        <p class="why__pivot">Parsync starts differently.</p>
+        <p class="measure">Before we sync anything, we pare &#8212; removing every step that shouldn't exist, redesigning from what remains. Then we run it clean.</p>
+        <p class="why__close">Business process re-engineering for the AI era &#8212; for companies that are done patching.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Final CTA -->
+  <section class="section cta" aria-labelledby="cta-title">
+    <div class="wrap reveal">
+      <h2 id="cta-title">Done patching?</h2>
+      <p>Book a 30-minute process audit. We'll walk one workflow end to end and show you what shouldn't be there.</p>
+      <div class="cta__actions">
+        <a class="btn" data-audit-link href="https://calendly.com/parsync/process-audit">Book a process audit</a>
+        <a class="link-quiet" href="mailto:fi@parsync.io">fi@parsync.io</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <p><a class="wordmark" href="#top">Parsync</a></p>
+    <p class="footer__tagline">Pare the process. Automate in sync.</p>
+    <div class="footer__meta">
+      <a href="mailto:fi@parsync.io">fi@parsync.io</a>
+      <span class="footer__handle">@parsync</span>
+      <a href="https://linkedin.com/company/parsync">LinkedIn</a>
+      <a href="https://instagram.com/parsync">Instagram</a>
+      <a href="https://x.com/parsync">X</a>
+      <span>&#169; 2026 Parsync.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Single place to change the booking destination. */
+  var PROCESS_AUDIT_URL = "https://calendly.com/parsync/process-audit";
+  var audits = document.querySelectorAll("[data-audit-link]");
+  for (var i = 0; i < audits.length; i++) audits[i].href = PROCESS_AUDIT_URL;
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* Sticky nav state */
+  var nav = document.getElementById("nav");
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      nav.classList.toggle("is-scrolled", window.scrollY > 8);
+      ticking = false;
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* Anchor scrolling that also moves focus for keyboard and screen reader users */
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest ? event.target.closest('a[href^="#"]') : null;
+    if (!link) return;
+    var id = link.getAttribute("href").slice(1);
+    var target = id ? document.getElementById(id) : null;
+    if (!target) return;
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    history.replaceState(null, "", "#" + id);
+  });
+
+  /* Subtle reveals, purely an enhancement */
+  var reveals = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduced.matches) {
+    for (var j = 0; j < reveals.length; j++) reveals[j].classList.add("is-in");
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-in");
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+  for (var k = 0; k < reveals.length; k++) observer.observe(reveals[k]);
+})();
+</script>
+</body>
+</html>
