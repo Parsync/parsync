@@ -25,9 +25,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@300;400;600&display=swap">
 
 <style>
+  /* ============================================================
+     Parsync marketing site
+     Pare/Sync kinetic system.
+
+     Motion rule that governs this file: the RESOLVED page is the
+     CSS default. Accumulated / noisy states are transient and only
+     ever apply inside `.js` AND prefers-reduced-motion:no-preference.
+     With JS off or reduced motion on, the page renders clean.
+     ============================================================ */
+
   /* ---------- Tokens ---------- */
   :root{
     --navy:#081116;
@@ -47,12 +57,32 @@
     --blue-04:rgba(80,143,255,.04);
     --blue-05:rgba(80,143,255,.05);
     --blue-08:rgba(80,143,255,.08);
+    --blue-14:rgba(80,143,255,.14);
+    --blue-28:rgba(80,143,255,.28);   /* decorative rules only, never text */
+    --blue-70:rgba(80,143,255,.70);   /* 3.55:1 on navy, large text only */
+
+    --display:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    --text:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+
+    /* Display scale. Wider range than a uniform page needs, so
+       hierarchy is legible before anything is read. */
+    --t-hero:clamp(2.5rem,6.2vw,4.5rem);
+    --t-xl:clamp(2.75rem,8.4vw,6rem);
+    --t-l:clamp(2rem,5.6vw,4.25rem);
+    --t-m:clamp(1.75rem,3.6vw,2.75rem);
+    --t-s:clamp(1.5rem,2.8vw,2.125rem);
+    --t-lead:clamp(1.25rem,2.2vw,1.75rem);
 
     --measure:65ch;
     --radius:4px;
     --nav-h:112px;
-    --gutter:clamp(1.25rem, 4vw, 3rem);
-    --section-y:clamp(4.5rem, 9vw, 8.5rem);
+    --gutter:clamp(1.25rem,4vw,3rem);
+
+    /* Density rhythm: sections opt into a tier instead of all
+       sharing one padding value. */
+    --section-y:clamp(4.5rem,9vw,8rem);
+    --section-y-tight:clamp(3.25rem,6vw,5rem);
+    --section-y-open:clamp(6rem,12vw,11rem);
   }
   @media (min-width:48rem){ :root{ --nav-h:70px; } }
 
@@ -63,7 +93,7 @@
     margin:0;
     background:var(--navy);
     color:var(--w-92);
-    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-family:var(--text);
     font-size:1.0625rem;
     font-weight:400;
     line-height:1.65;
@@ -72,7 +102,16 @@
   }
   @media (min-width:48rem){ body{font-size:1.125rem} }
 
-  h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.02em;line-height:1.06;color:var(--white)}
+  h1,h2,h3{
+    margin:0;
+    font-family:var(--display);
+    font-weight:800;
+    letter-spacing:-.033em;
+    line-height:1.03;
+    color:var(--white);
+    text-wrap:balance;
+  }
+  h3{font-weight:700;letter-spacing:-.025em}
   p{margin:0}
   svg{display:block;max-width:100%}
   a{color:inherit}
@@ -94,7 +133,9 @@
 
   /* ---------- Layout ---------- */
   .wrap{width:100%;max-width:1220px;margin:0 auto;padding-inline:var(--gutter)}
-  .section{padding-block:var(--section-y);border-top:1px solid var(--rule)}
+  .section{position:relative;padding-block:var(--section-y);border-top:1px solid var(--rule)}
+  .section--tight{padding-block:var(--section-y-tight)}
+  .section--open{padding-block:var(--section-y-open)}
   .section--tinted{background:var(--blue-04)}
   .section--light{background:var(--white);color:var(--n-72);border-top:0}
   .section--light h2,.section--light h3{color:var(--navy)}
@@ -103,22 +144,29 @@
   .measure{max-width:var(--measure)}
   .stack>*+*{margin-top:1.25rem}
 
-  /* ---------- Eyebrow / section label ---------- */
-  .label{
+  /* ---------- Eyebrow ---------- */
+  .eyebrow{
     display:flex;align-items:flex-start;gap:.75rem;
     margin:0;
+    font-family:var(--text);
     font-size:.75rem;font-weight:600;line-height:1.3;
     letter-spacing:.16em;text-transform:uppercase;
     color:var(--w-58);
   }
-  .section--light .label{color:var(--n-72)}
-  /* the rule tracks the first line, so wrapped labels stay aligned */
-  .label::before{content:"";flex:none;width:28px;height:1px;margin-top:.6em;background:var(--blue)}
+  .section--light .eyebrow{color:var(--n-72)}
+  /* the rule tracks the first line, so wrapped eyebrows stay aligned */
+  .eyebrow::before{content:"";flex:none;width:28px;height:1px;margin-top:.6em;background:var(--blue)}
+
+  /* Section headings carry real display weight, with the eyebrow
+     kept as a separate, smaller orientation mark. */
+  .section__head{display:grid;gap:clamp(1rem,2vw,1.5rem)}
+  .section__head h2{font-size:var(--t-m);max-width:24ch}
 
   /* ---------- Buttons and links ---------- */
   .btn{
     display:inline-flex;align-items:center;justify-content:center;
     min-height:48px;padding:.6rem 1.5rem;
+    font-family:var(--text);
     font-size:.9375rem;font-weight:600;letter-spacing:.01em;
     text-decoration:none;border:1px solid transparent;border-radius:var(--radius);
     background:var(--blue);color:var(--navy);
@@ -155,7 +203,8 @@
     gap:.4rem 1rem;padding-block:.5rem;
   }
   .wordmark{
-    font-size:1.25rem;font-weight:800;letter-spacing:-.02em;
+    font-family:var(--display);
+    font-size:1.3125rem;font-weight:800;letter-spacing:-.035em;
     color:var(--white);text-decoration:none;
   }
   .nav__inner .wordmark{
@@ -173,6 +222,7 @@
     transition:color 200ms ease;
   }
   .nav__links a:hover{color:var(--white)}
+  .nav__links a[aria-current="page"]{color:var(--white)}
   @media (min-width:48rem){
     .nav__inner{grid-template-columns:auto 1fr auto;padding-block:.6rem}
     .nav__inner .wordmark,
@@ -184,6 +234,7 @@
 
   /* ---------- Hero ---------- */
   .hero{
+    position:relative;
     display:flex;align-items:center;
     min-height:100vh;
     min-height:calc(100svh - var(--nav-h));
@@ -196,12 +247,12 @@
   }
   .hero h1{
     margin-top:clamp(1.5rem,3vw,2rem);
-    font-size:clamp(2.4rem,6.6vw,4.5rem);
+    font-size:var(--t-hero);
     max-width:20ch;
   }
   .hero__sub{
     margin-top:clamp(1.5rem,3vw,2rem);
-    max-width:56ch;
+    max-width:54ch;
     font-size:clamp(1.0625rem,1.9vw,1.375rem);
     font-weight:300;
     color:var(--w-72);
@@ -211,119 +262,181 @@
     margin-top:clamp(2rem,4vw,2.75rem);
   }
 
-  /* ---------- Hero motif ---------- */
+  /* ---------- Hero motif: the kinetic system, stated once ---------- */
   .motif{display:none}
   @media (min-width:48rem){
-    .motif{display:block;border:1px solid var(--rule);border-radius:var(--radius);padding:1rem}
+    .motif{
+      display:block;
+      border:1px solid var(--rule);border-radius:var(--radius);
+      padding:clamp(1rem,2vw,1.5rem);
+      background:linear-gradient(180deg,var(--blue-04),transparent);
+    }
   }
   .motif svg{width:100%;height:auto}
   .motif line{stroke:var(--blue);stroke-width:1.25;stroke-linecap:butt}
   .motif rect.node{fill:var(--blue)}
-  .motif .cut{opacity:0;transform:translateX(-16px)}
+  /* Default: only the pared, aligned system is visible. */
+  .motif .cut{opacity:0}
   .motif .axis{stroke-dasharray:260;stroke-dashoffset:0;stroke-width:1}
   .motif .keep-node{opacity:1}
+  /* ---------- Kinetic noise layer ----------
+     Hidden by default and by reduced motion. It is a transient
+     state during reveal, never a resting state. */
+  .noise{display:none}
 
-  /* ---------- The problem ---------- */
+  /* ---------- 2. The problem ---------- */
   .problem__grid{display:grid;gap:clamp(2rem,5vw,3.5rem)}
   @media (min-width:64rem){
-    .problem__grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
+    .problem__grid{grid-template-columns:minmax(0,4fr) minmax(0,8fr);align-items:start}
   }
   .problem__lead{
-    font-size:clamp(1.25rem,2.4vw,1.75rem);
-    font-weight:300;line-height:1.45;color:var(--white);
+    font-size:var(--t-lead);
+    font-weight:300;line-height:1.4;color:var(--white);
+  }
+  /* The consequence is set apart rather than stacked, so the
+     section has an internal turn instead of one even block. */
+  .problem__cost{
+    margin-top:clamp(2rem,4vw,3rem);
+    padding-left:clamp(1rem,2.5vw,2rem);
+    border-left:2px solid var(--blue);
+    max-width:54ch;
   }
 
-  /* ---------- The question ---------- */
+  /* ---------- 3. The question: the page's first density break ---------- */
+  .question{overflow:hidden}
   .question__ask{
-    font-size:clamp(1.75rem,4.6vw,3.25rem);
-    font-weight:800;letter-spacing:-.02em;line-height:1.12;
-    max-width:30ch;color:var(--white);
+    font-family:var(--display);
+    font-size:var(--t-l);
+    font-weight:800;letter-spacing:-.033em;line-height:1.05;
+    max-width:26ch;color:var(--white);
+    text-wrap:balance;
   }
   .question__ask strong{color:var(--blue);font-weight:800}
   .question__body{
-    margin-top:clamp(2rem,4vw,3rem);
+    margin-top:clamp(2.5rem,5vw,4rem);
     padding-top:clamp(2rem,4vw,3rem);
     border-top:1px solid var(--rule);
     display:grid;gap:1.5rem;
   }
   @media (min-width:64rem){
-    .question__body{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,4vw,4rem)}
+    .question__body{
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:clamp(2rem,4vw,4rem);
+      /* the second column drops, pulling the eye down the page */
+      align-items:start;
+    }
+    .question__body p:last-child{margin-top:clamp(1.5rem,3vw,2.5rem)}
   }
   .question__body p{color:var(--w-72);max-width:52ch}
 
-  /* ---------- Method ---------- */
+  /* ---------- 4. Method: the resolution moment ---------- */
+  .method{
+    background:
+      radial-gradient(70% 50% at 50% 0%,var(--blue-08),transparent 72%),
+      var(--navy);
+    border-top:1px solid var(--rule-strong);
+    overflow:hidden;
+  }
+  .method__head{max-width:34ch}
+  .method__head h2{font-size:var(--t-m)}
+
+  /* An asymmetric diptych, not two equal cards: Pare leads, Sync
+     resolves, and a long rule carries the eye between them. */
   .method__flow{
-    display:grid;gap:clamp(1.5rem,3vw,2rem);
-    margin-top:clamp(1.75rem,3.5vw,2.75rem);
+    display:grid;gap:clamp(1.75rem,3.5vw,2.5rem);
+    margin-top:clamp(2.5rem,5vw,4rem);
   }
   @media (min-width:64rem){
-    .method__flow{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch}
+    .method__flow{
+      grid-template-columns:minmax(0,6fr) auto minmax(0,5fr);
+      align-items:start;
+    }
+    .phase--sync{margin-top:clamp(3rem,7vw,6rem)}
   }
-  .phase{
-    border:1px solid var(--rule);border-radius:var(--radius);
-    padding:clamp(1.5rem,3.5vw,2.5rem);
-    background:var(--blue-04);
-  }
+  .phase{position:relative;padding-top:clamp(1.25rem,2.5vw,1.75rem);border-top:2px solid var(--blue)}
   .phase__num{
-    display:block;font-size:.8125rem;font-weight:600;letter-spacing:.18em;
-    color:var(--blue);
+    display:block;
+    font-family:var(--display);
+    font-size:clamp(2.5rem,5vw,4rem);font-weight:800;
+    letter-spacing:-.04em;line-height:1;
+    color:var(--blue-70);
   }
-  .phase h3{margin-top:.85rem;font-size:clamp(1.75rem,3.2vw,2.5rem)}
+  .phase h3{margin-top:.4rem;font-size:var(--t-s)}
   .phase__def{
-    margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--rule);
+    margin-top:.9rem;
     font-size:1.0625rem;font-weight:600;color:var(--white);
   }
-  .phase__body{margin-top:.9rem;color:var(--w-72)}
+  .phase__body{margin-top:.9rem;color:var(--w-72);max-width:46ch}
   .connector{
     display:flex;align-items:center;justify-content:center;
     padding-block:.25rem;color:var(--blue);
   }
   .connector svg{transform:rotate(90deg);width:28px;height:28px}
   @media (min-width:64rem){
-    .connector{padding-block:0;padding-inline:clamp(1rem,2vw,2rem)}
-    .connector svg{transform:none;width:56px;height:28px}
+    .connector{padding-block:0;padding-inline:clamp(1rem,2vw,2rem);margin-top:clamp(4rem,8vw,7rem)}
+    .connector svg{transform:none;width:72px;height:28px}
   }
+  /* The methodology line is the largest statement on the page
+     after the hero. It is the point the whole section builds to. */
   .tagline{
-    margin-top:clamp(2.5rem,5vw,4rem);
-    padding-top:clamp(1.5rem,3vw,2rem);
+    margin-top:clamp(3.5rem,7vw,6rem);
+    padding-top:clamp(1.75rem,3.5vw,2.5rem);
     border-top:1px solid var(--rule-strong);
-    font-size:clamp(1.125rem,2.4vw,1.625rem);
-    font-weight:600;letter-spacing:-.01em;color:var(--white);
+    font-family:var(--display);
+    font-size:var(--t-l);
+    font-weight:800;letter-spacing:-.033em;line-height:1.05;
+    color:var(--white);
+    max-width:22ch;
   }
 
-  /* ---------- The AI era ---------- */
+  /* ---------- 5. The AI era: a stepped descent ---------- */
   .ai__grid{
-    display:grid;gap:clamp(1.5rem,4vw,3rem);
-    margin-top:clamp(1.75rem,3.5vw,2.75rem);
+    display:grid;gap:clamp(1.75rem,4vw,2.5rem);
+    margin-top:clamp(2.5rem,5vw,3.5rem);
   }
   @media (min-width:64rem){
-    .ai__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ai__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,3vw,3rem);align-items:start}
+    .ai__grid>*:nth-child(2){margin-top:clamp(2rem,4vw,3.5rem)}
+    .ai__grid>*:nth-child(3){margin-top:clamp(4rem,8vw,7rem)}
   }
   .ai__grid p{color:var(--w-72);padding-top:1.25rem;border-top:1px solid var(--rule)}
-  .ai__grid p:last-child{color:var(--white);font-weight:600}
+  .ai__grid p:last-child{
+    color:var(--white);font-weight:600;
+    border-top-color:var(--blue);
+    font-size:clamp(1.125rem,1.8vw,1.3125rem);
+  }
 
-  /* ---------- Services (light) ---------- */
+  /* ---------- 6. Services: flagship leads, the rest support ---------- */
   .services__grid{
     display:grid;gap:1px;
-    margin-top:clamp(2rem,4vw,3rem);
+    margin-top:clamp(2.5rem,5vw,3.5rem);
     background:var(--n-rule);
     border:1px solid var(--n-rule);border-radius:var(--radius);
+    overflow:hidden;
   }
   @media (min-width:48rem){
-    .services__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .services__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card--flagship{grid-column:1 / -1}
   }
   .card{
     background:var(--white);
-    border-top:3px solid transparent;
     padding:clamp(1.5rem,3.5vw,2.5rem);
     transition:background 200ms ease;
   }
   .card:hover{background:var(--blue-05)}
-  .card svg{stroke:var(--blue);fill:none;stroke-width:1.5;width:40px;height:40px}
-  .card h3{margin-top:1.5rem;font-size:clamp(1.25rem,2.2vw,1.5rem)}
+  .card svg{stroke:var(--blue);fill:none;stroke-width:1.5;width:36px;height:36px}
+  .card h3{margin-top:1.5rem;font-size:clamp(1.1875rem,1.9vw,1.375rem)}
   .card p{margin-top:.75rem;max-width:38ch}
+  /* The entry point to every engagement is sized like one. */
+  .card--flagship{
+    background:var(--white);
+    border-top:3px solid var(--blue);
+    padding-block:clamp(2rem,4.5vw,3.25rem);
+  }
+  .card--flagship svg{width:44px;height:44px}
+  .card--flagship h3{font-size:var(--t-s);letter-spacing:-.03em}
+  .card--flagship p{font-size:clamp(1.0625rem,1.6vw,1.1875rem);max-width:44ch}
   .services__work{margin-top:clamp(1.75rem,3vw,2.5rem)}
-  .card--flagship{border-top-color:var(--blue)}
   .card__tag{
     display:inline-block;
     padding:.3rem .6rem;border-radius:2px;
@@ -331,28 +444,35 @@
     font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   }
 
-  /* ---------- Why Parsync ---------- */
+  /* ---------- 7. Why Parsync ---------- */
   .why__grid{display:grid;gap:clamp(2rem,5vw,4rem)}
   @media (min-width:64rem){
     .why__grid{grid-template-columns:minmax(0,4fr) minmax(0,8fr);align-items:start}
   }
   .why__body>*+*{margin-top:1.5rem}
   .why__lead{
-    font-size:clamp(1.25rem,2.4vw,1.75rem);
-    font-weight:300;line-height:1.45;color:var(--white);
+    font-size:var(--t-lead);
+    font-weight:300;line-height:1.4;color:var(--white);
   }
   .why__pivot{font-weight:600;color:var(--blue)}
   .why__body>.why__close{
-    margin-top:clamp(1.75rem,3.5vw,2.5rem);
-    padding-left:clamp(1rem,2vw,1.5rem);
-    border-left:2px solid var(--blue);
-    font-size:clamp(1.125rem,2.2vw,1.5rem);
-    font-weight:600;letter-spacing:-.01em;color:var(--white);
+    margin-top:clamp(2.5rem,5vw,3.5rem);
+    padding-top:clamp(1.5rem,3vw,2rem);
+    border-top:1px solid var(--rule-strong);
+    font-family:var(--display);
+    font-size:var(--t-m);
+    font-weight:800;letter-spacing:-.033em;line-height:1.08;
+    color:var(--white);
+    max-width:28ch;
   }
 
-  /* ---------- Final CTA ---------- */
-  .cta{text-align:center;padding-block:clamp(5.5rem,12vw,10rem)}
-  .cta h2{font-size:clamp(2.25rem,6.4vw,4.25rem)}
+  /* ---------- 8. Final CTA ---------- */
+  .cta{
+    text-align:center;
+    border-top:1px solid var(--rule-strong);
+    background-image:radial-gradient(60% 70% at 50% 100%,var(--blue-08),transparent 70%);
+  }
+  .cta h2{font-size:var(--t-xl)}
   .cta p{
     margin:clamp(1.25rem,3vw,1.75rem) auto 0;max-width:52ch;
     font-size:clamp(1.0625rem,1.8vw,1.25rem);font-weight:300;color:var(--w-72);
@@ -374,7 +494,10 @@
   .footer__tagline{font-weight:600;color:var(--w-72)}
   .footer__meta{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem}
   .footer a{
-    display:inline-flex;align-items:center;min-height:44px;
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:44px;
+    /* short labels like "X" would otherwise be a ~10px wide target */
+    min-width:44px;
     color:var(--w-72);text-decoration:none;
     transition:color 200ms ease;
   }
@@ -382,13 +505,16 @@
   .footer .wordmark{color:var(--white)}
   .footer__handle{letter-spacing:.02em}
 
-  /* ---------- Motion ---------- */
+  /* ============================================================
+     Motion. Everything below is enhancement only.
+     ============================================================ */
   @media (prefers-reduced-motion:no-preference){
     html{scroll-behavior:smooth}
 
     .js .reveal{opacity:0;transform:translateY(14px);transition:opacity 280ms ease-out,transform 280ms ease-out}
     .js .reveal.is-in{opacity:1;transform:none}
 
+    /* Hero motif: accumulation is pared away, survivors align. */
     .motif .cut{animation:pare-out 1000ms ease-in-out 400ms both}
     .motif .keep{animation:pare-align 900ms cubic-bezier(.22,.61,.36,1) both}
     .motif .keep:nth-of-type(1){animation-delay:600ms}
@@ -396,6 +522,32 @@
     .motif .keep:nth-of-type(3){animation-delay:920ms}
     .motif .axis{animation:draw 800ms ease-out 1150ms both}
     .motif .keep-node{animation:fade-in 500ms ease-out 1500ms both}
+
+    /* The section-level kinetic layer. Ghost rules arrive
+       misaligned and converge onto the section's own rule as the
+       section enters view, then clear. Purely transient. */
+    .js [data-kin] .noise{
+      display:block;position:absolute;inset:0;
+      pointer-events:none;overflow:hidden;
+    }
+    .js [data-kin] .noise i{
+      position:absolute;left:0;right:0;height:1px;
+      background:var(--blue-14);
+      opacity:0;
+    }
+    .js [data-kin] .noise i:nth-child(1){top:22%}
+    .js [data-kin] .noise i:nth-child(2){top:48%}
+    .js [data-kin] .noise i:nth-child(3){top:71%}
+    .js [data-kin].is-kin .noise i{animation:converge 1500ms cubic-bezier(.22,.61,.36,1) both}
+    .js [data-kin].is-kin .noise i:nth-child(2){animation-delay:120ms}
+    .js [data-kin].is-kin .noise i:nth-child(3){animation-delay:240ms}
+
+    /* At the Method the noise does not merely clear: it collapses
+       into one line that holds, which is the section's whole point. */
+    .js .method .noise i{background:var(--blue-28)}
+    .js .method.is-kin .noise i{animation:collapse 1700ms cubic-bezier(.22,.61,.36,1) both}
+    .js .method.is-kin .noise i:nth-child(2){animation-delay:140ms}
+    .js .method.is-kin .noise i:nth-child(3){animation-delay:280ms}
 
     @keyframes pare-out{
       0%{opacity:.5;transform:none}
@@ -408,6 +560,17 @@
     }
     @keyframes draw{ from{stroke-dashoffset:260} to{stroke-dashoffset:0} }
     @keyframes fade-in{ from{opacity:0} to{opacity:1} }
+
+    @keyframes converge{
+      0%{opacity:0;transform:translateX(var(--x,-40px)) scaleX(.6)}
+      35%{opacity:1}
+      100%{opacity:0;transform:translateX(0) scaleX(1)}
+    }
+    @keyframes collapse{
+      0%{opacity:0;transform:translateY(var(--y,-28px)) translateX(var(--x,-40px)) scaleX(.55)}
+      40%{opacity:1;transform:translateY(var(--y,-28px)) translateX(0) scaleX(1)}
+      100%{opacity:0;transform:translateY(0) translateX(0) scaleX(1)}
+    }
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -443,7 +606,7 @@
   <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="wrap hero__grid">
       <div>
-        <p class="label">AI-Native Business Process Re-Engineering</p>
+        <p class="eyebrow">AI-Native Business Process Re-Engineering</p>
         <h1 id="hero-title">Don't automate a broken process. Pare it first.</h1>
         <p class="hero__sub">Parsync re-engineers the operational layer of your business &#8212; removing what doesn't belong, syncing what remains to run itself. You get the hours back for the work only you can do.</p>
         <div class="hero__actions">
@@ -485,18 +648,22 @@
   </section>
 
   <!-- 2. The problem -->
-  <section class="section" aria-labelledby="problem-title">
+  <section class="section section--tight" data-kin aria-labelledby="problem-title">
+    <div class="noise" aria-hidden="true"><i style="--x:-52px"></i><i style="--x:38px"></i><i style="--x:-24px"></i></div>
     <div class="wrap problem__grid reveal">
-      <h2 class="label" id="problem-title">The real cost of inefficiency</h2>
-      <div class="stack">
+      <div class="section__head">
+        <h2 id="problem-title">The real cost of inefficiency</h2>
+      </div>
+      <div>
         <p class="problem__lead">Most businesses are running processes that should not exist. Not because the people are careless, but because the process was never designed &#8212; it just accumulated. A spreadsheet that became a system. A workaround that became a workflow. A task nobody questions because nobody remembers why it started.</p>
-        <p class="measure">This is the real cost of inefficiency. Not slow software. Not the wrong tool. Processes that were never questioned and are now quietly consuming hours, headcount, and revenue every single week.</p>
+        <p class="problem__cost">This is the real cost of inefficiency. Not slow software. Not the wrong tool. Processes that were never questioned and are now quietly consuming hours, headcount, and revenue every single week.</p>
       </div>
     </div>
   </section>
 
   <!-- 3. The question -->
-  <section class="section section--tinted" aria-labelledby="question-title">
+  <section class="section section--tinted question" data-kin aria-labelledby="question-title">
+    <div class="noise" aria-hidden="true"><i style="--x:-64px"></i><i style="--x:44px"></i><i style="--x:-30px"></i></div>
     <div class="wrap reveal">
       <h2 class="sr-only" id="question-title">The question</h2>
       <p class="question__ask">The question most automation tools never ask: <strong>Should this process exist at all?</strong></p>
@@ -507,12 +674,16 @@
     </div>
   </section>
 
-  <!-- 4. Method -->
-  <section class="section" id="method" aria-labelledby="method-title">
+  <!-- 4. Method: the page resolves here -->
+  <section class="section section--open method" id="method" data-kin aria-labelledby="method-title">
+    <div class="noise" aria-hidden="true"><i style="--x:-70px;--y:-34px"></i><i style="--x:52px;--y:-18px"></i><i style="--x:-38px;--y:-26px"></i></div>
     <div class="wrap reveal">
-      <h2 class="label" id="method-title">The method</h2>
+      <div class="section__head method__head">
+        <h2 id="method-title">The method</h2>
+      </div>
+
       <div class="method__flow">
-        <article class="phase">
+        <article class="phase phase--pare">
           <span class="phase__num">01</span>
           <h3>Pare</h3>
           <p class="phase__def">To cut to essentials.</p>
@@ -520,24 +691,27 @@
         </article>
 
         <div class="connector" aria-hidden="true">
-          <svg viewBox="0 0 56 28"><path d="M0 14h48M40 7l8 7-8 7" fill="none" stroke="currentColor" stroke-width="1.25"></path></svg>
+          <svg viewBox="0 0 72 28"><path d="M0 14h62M54 7l8 7-8 7" fill="none" stroke="currentColor" stroke-width="1.25"></path></svg>
         </div>
 
-        <article class="phase">
+        <article class="phase phase--sync">
           <span class="phase__num">02</span>
           <h3>Sync</h3>
           <p class="phase__def">To keep in reliable step.</p>
           <p class="phase__body">What remains is structured, mapped, and automated to run in lockstep &#8212; across tools and teams, without a person standing in the middle holding it together.</p>
         </article>
       </div>
+
       <p class="tagline">Pare the process. Automate in sync.</p>
     </div>
   </section>
 
   <!-- 5. The AI era -->
-  <section class="section section--tinted" aria-labelledby="ai-title">
+  <section class="section" aria-labelledby="ai-title">
     <div class="wrap reveal">
-      <h2 class="label" id="ai-title">Built for the AI era</h2>
+      <div class="section__head">
+        <h2 id="ai-title">Built for the AI era</h2>
+      </div>
       <div class="ai__grid">
         <p>Every SMB is being told to adopt AI or get left behind. But AI amplifies what's already there &#8212; feed it a broken process, you get a broken process moving faster.</p>
         <p>The businesses built for the AI era aren't the ones with the most AI tools. They're the ones who pared first. Clean processes, structured data, operations that run without intervention: that is what AI requires to do anything useful.</p>
@@ -549,7 +723,9 @@
   <!-- 6. Services -->
   <section class="section section--light" id="services" aria-labelledby="services-title">
     <div class="wrap reveal">
-      <h2 class="label" id="services-title">What we do</h2>
+      <div class="section__head">
+        <h2 id="services-title">What we do</h2>
+      </div>
 
       <div class="services__grid">
         <article class="card card--flagship">
@@ -604,7 +780,9 @@
   <!-- 7. Why Parsync -->
   <section class="section" id="why" aria-labelledby="why-title">
     <div class="wrap why__grid reveal">
-      <h2 class="label" id="why-title">Why Parsync</h2>
+      <div class="section__head">
+        <h2 id="why-title">Why Parsync</h2>
+      </div>
       <div class="why__body">
         <p class="why__lead">Most businesses automate their processes before they've questioned them. The result: broken workflows, running faster.</p>
         <p class="why__pivot">Parsync starts differently.</p>
@@ -615,7 +793,7 @@
   </section>
 
   <!-- 8. Final CTA -->
-  <section class="section cta" aria-labelledby="cta-title">
+  <section class="section section--open cta" aria-labelledby="cta-title">
     <div class="wrap reveal">
       <h2 id="cta-title">Done patching?</h2>
       <p>Book a 30-minute process audit. We'll walk one workflow end to end and show you what shouldn't be there.</p>
@@ -682,20 +860,37 @@
     history.replaceState(null, "", "#" + id);
   });
 
+  var supported = "IntersectionObserver" in window;
+
   /* Subtle reveals, purely an enhancement */
   var reveals = document.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window) || reduced.matches) {
+  if (!supported || reduced.matches) {
     for (var j = 0; j < reveals.length; j++) reveals[j].classList.add("is-in");
-    return;
+  } else {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -72px 0px", threshold: 0 });
+  /* threshold 0 keeps this independent of section height: a percentage
+     threshold can fail to fire on a section taller than the viewport. */
+    for (var k = 0; k < reveals.length; k++) observer.observe(reveals[k]);
   }
-  var observer = new IntersectionObserver(function (entries) {
+
+  /* Kinetic layer. The noise only ever runs as a transient state on
+     entry, so skipping this leaves the resolved page untouched. */
+  if (!supported || reduced.matches) return;
+  var kin = document.querySelectorAll("[data-kin]");
+  var kinObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-in");
-      observer.unobserve(entry.target);
+      entry.target.classList.add("is-kin");
+      kinObserver.unobserve(entry.target);
     });
-  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
-  for (var k = 0; k < reveals.length; k++) observer.observe(reveals[k]);
+  }, { threshold: 0.2 });
+  for (var m = 0; m < kin.length; m++) kinObserver.observe(kin[m]);
 })();
 </script>
 </body>
