@@ -310,6 +310,65 @@
     max-width:30ch;
   }
 
+  /* ---------- MCP install ---------- */
+  .install__lead{margin-top:clamp(1.25rem,2.5vw,1.75rem);max-width:58ch}
+  .install__env{
+    margin-top:1rem;max-width:58ch;
+    font-size:.9375rem;font-weight:600;color:var(--blue);
+  }
+  .code-panel{
+    margin-top:clamp(2rem,4vw,2.75rem);
+    border:1px solid var(--rule);border-radius:var(--radius);
+    background:rgba(8,17,22,.55);overflow:hidden;
+  }
+  .code-panel__head{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem 1rem;
+    padding:.75rem 1rem;border-bottom:1px solid var(--rule);
+  }
+  .code-panel__label{
+    font-size:.6875rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--w-58);
+  }
+  .btn--copy{
+    min-height:44px;padding:.45rem 1rem;
+    font-size:.8125rem;font-weight:600;
+    background:transparent;color:var(--white);
+    border:1px solid var(--rule-strong);
+  }
+  .btn--copy:hover{background:var(--blue-04);border-color:var(--blue)}
+  .btn--copy.is-copied{border-color:var(--blue);color:var(--blue)}
+  .code-panel__pre{
+    margin:0;padding:clamp(1rem,2.5vw,1.5rem);
+    overflow-x:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:clamp(.8125rem,1.6vw,.9375rem);line-height:1.55;
+    color:var(--w-92);
+    -webkit-overflow-scrolling:touch;
+  }
+  .code-panel__pre code{font:inherit;color:inherit;white-space:pre}
+  .install-paths{
+    display:grid;gap:clamp(1.5rem,3vw,2rem);
+    margin-top:clamp(2rem,4vw,3rem);
+  }
+  @media (min-width:64rem){
+    .install-paths{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,3vw,2.5rem)}
+  }
+  .install-path{
+    border-top:2px solid var(--blue);
+    padding-top:clamp(1.25rem,2.5vw,1.5rem);
+  }
+  .install-path h3{font-size:1.125rem;letter-spacing:-.01em}
+  .install-path ol{
+    margin:1rem 0 0;padding-left:1.25rem;
+    color:var(--w-72);
+  }
+  .install-path li{margin-top:.65rem;max-width:52ch}
+  .install-path li:first-child{margin-top:0}
+  .install-path code{
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.9em;color:var(--blue);word-break:break-all;
+  }
+
   /* ---------- Pricing (light) ---------- */
   .price-lead{margin-top:clamp(1.5rem,3vw,2rem);max-width:60ch;font-size:clamp(1.125rem,2.2vw,1.375rem);font-weight:300;color:var(--navy)}
   .plans{
@@ -539,6 +598,49 @@
     </div>
   </section>
 
+  <!-- 5b. Install MCP -->
+  <section class="section" id="install" aria-labelledby="install-title">
+    <div class="wrap reveal">
+      <h2 id="install-title">Add FlipTide where you already work</h2>
+      <p class="lead install__lead">FlipTide is a remote MCP server. Add the URL once in Cursor or Claude and the listing tools show up in the chat you already have open.</p>
+      <p class="install__env">Development endpoint for now. When production is live, this page will point at the production URL instead.</p>
+
+      <div class="code-panel">
+        <div class="code-panel__head">
+          <span class="code-panel__label">Cursor: merge into mcp.json</span>
+          <button type="button" class="btn btn--copy" data-copy-mcp>Copy config</button>
+        </div>
+        <pre class="code-panel__pre" id="mcp-config"><code>{
+  "mcpServers": {
+    "fliptide": {
+      "url": "https://dev.fliptide.parsync.io/mcp"
+    }
+  }
+}</code></pre>
+        <p class="sr-only" id="copy-mcp-status" aria-live="polite"></p>
+      </div>
+
+      <div class="install-paths">
+        <article class="install-path">
+          <h3>Cursor</h3>
+          <ol>
+            <li>Open <strong>Cursor Settings</strong>, then <strong>MCP</strong>, and edit your config (or open <code>~/.cursor/mcp.json</code>).</li>
+            <li>Merge the block above under <code>mcpServers</code>. Keep your other servers; add or replace the <code>fliptide</code> entry.</li>
+            <li>Save and reload the window if the FlipTide tools do not appear. Run connect when the assistant asks you to sign in to eBay.</li>
+          </ol>
+        </article>
+        <article class="install-path">
+          <h3>Claude</h3>
+          <ol>
+            <li>In Claude (desktop or web), open settings for <strong>Connectors</strong> or <strong>MCP</strong> and add a custom remote server.</li>
+            <li>Paste this URL: <code>https://dev.fliptide.parsync.io/mcp</code>. Claude does not use Cursor's <code>mcp.json</code> file; the URL is what both clients share.</li>
+            <li>Complete sign-in when prompted, then ask the assistant to run <code>ensure_account_ready</code> or <code>connect_ebay</code> to link your store.</li>
+          </ol>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- 6. Pricing -->
   <section class="section section--light" id="pricing" aria-labelledby="pricing-title">
     <div class="wrap reveal">
@@ -683,18 +785,38 @@
   var reveals = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window) || reduced.matches) {
     for (var j = 0; j < reveals.length; j++) reveals[j].classList.add("is-in");
-    return;
+  } else {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -72px 0px", threshold: 0 });
+    /* threshold 0 keeps this independent of section height: a percentage
+       threshold can fail to fire on a section taller than the viewport. */
+    for (var k = 0; k < reveals.length; k++) observer.observe(reveals[k]);
   }
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-in");
-      observer.unobserve(entry.target);
+
+  /* Copy MCP config (enhancement only; block stays selectable without JS) */
+  var copyBtn = document.querySelector("[data-copy-mcp]");
+  var configEl = document.getElementById("mcp-config");
+  var copyStatus = document.getElementById("copy-mcp-status");
+  if (copyBtn && configEl) {
+    copyBtn.addEventListener("click", function () {
+      var text = configEl.textContent;
+      function done(ok) {
+        if (copyStatus) copyStatus.textContent = ok ? "Config copied." : "Copy failed. Select the block and copy manually.";
+        copyBtn.classList.toggle("is-copied", ok);
+        if (ok) window.setTimeout(function () { copyBtn.classList.remove("is-copied"); }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else {
+        done(false);
+      }
     });
-  }, { rootMargin: "0px 0px -72px 0px", threshold: 0 });
-  /* threshold 0 keeps this independent of section height: a percentage
-     threshold can fail to fire on a section taller than the viewport. */
-  for (var k = 0; k < reveals.length; k++) observer.observe(reveals[k]);
+  }
 })();
 </script>
 </body>
