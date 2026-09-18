@@ -603,7 +603,7 @@
     <div class="wrap reveal">
       <h2 id="install-title">Add FlipTide where you already work</h2>
       <p class="lead install__lead">FlipTide is a remote MCP server. Add the URL once in Cursor or Claude and the listing tools show up in the chat you already have open.</p>
-      <p class="install__env">Development endpoint for now. When production is live, this page will point at the production URL instead.</p>
+      <p class="install__env">Production MCP endpoint.</p>
 
       <div class="code-panel">
         <div class="code-panel__head">
@@ -613,7 +613,7 @@
         <pre class="code-panel__pre" id="mcp-config"><code>{
   "mcpServers": {
     "fliptide": {
-      "url": "https://dev.fliptide.parsync.io/mcp"
+      "url": "https://fliptide.parsync.io/mcp"
     }
   }
 }</code></pre>
@@ -633,7 +633,7 @@
           <h3>Claude</h3>
           <ol>
             <li>In Claude (desktop or web), open settings for <strong>Connectors</strong> or <strong>MCP</strong> and add a custom remote server.</li>
-            <li>Paste this URL: <code>https://dev.fliptide.parsync.io/mcp</code>. Claude does not use Cursor's <code>mcp.json</code> file; the URL is what both clients share.</li>
+            <li>Paste this URL: <code>https://fliptide.parsync.io/mcp</code>. Claude does not use Cursor's <code>mcp.json</code> file; the URL is what both clients share.</li>
             <li>Complete sign-in when prompted, then ask the assistant to run <code>ensure_account_ready</code> or <code>connect_ebay</code> to link your store.</li>
           </ol>
         </article>
