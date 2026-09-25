@@ -371,6 +371,8 @@
 
   /* ---------- Pricing (light) ---------- */
   .price-lead{margin-top:clamp(1.5rem,3vw,2rem);max-width:60ch;font-size:clamp(1.125rem,2.2vw,1.375rem);font-weight:300;color:var(--navy)}
+  .price-lead--rules{margin-top:clamp(1.5rem,3vw,2rem);max-width:62ch;font-size:1rem;font-weight:600;color:var(--n-72)}
+  .cta__note{margin:clamp(1.25rem,3vw,1.75rem) auto 0;max-width:52ch;color:var(--w-72);font-size:1rem}
   .plans{
     display:grid;gap:1px;
     margin-top:clamp(2rem,4vw,3rem);
@@ -466,7 +468,7 @@
       <a href="/#method">Method</a>
       <a href="/#services">Services</a>
       <a href="/fliptide" aria-current="page">Work</a>
-      <a href="/#why">Why Parsync</a>
+      <a href="#install">Setup</a>
     </nav>
     <a class="btn btn--nav" data-audit-link href="https://calendar.app.google/tk7x2NYHYPZq2wYJ7">Book a process audit</a>
   </div>
@@ -480,7 +482,7 @@
       <h1 id="hero-title">FlipTide: listing ops, pared down to the photo.</h1>
       <p class="hero__sub">High-volume resellers don't have a selling problem. They have a typing problem. We cut the listing process back to the one step that needs a human (taking the photo) and synced everything after it.</p>
       <div class="hero__actions">
-        <a class="btn" href="https://fliptide.parsync.io">Try FlipTide</a>
+        <a class="btn" href="#install">Try FlipTide</a>
         <a class="btn btn--ghost" href="#process">Read the process</a>
       </div>
 
@@ -511,8 +513,7 @@
       <h2 id="problem-title">What we found</h2>
       <div class="stack">
         <p class="lead">A reseller with a thousand items a month is not running a store. They are running a data-entry department with one employee.</p>
-        <p class="measure">We walked the workflow end to end. Shoot the item. Rename the files. Sort the shots into piles per item. Open the eBay form. Retype the brand, size, colour, and condition that the photos already show. Open three tabs of sold comps. Guess a price. Fill the aspects eBay rejects you for missing. Repeat. For each item.</p>
-        <p class="measure">Every tool we looked at attacked the last five minutes of that: a faster form, a bulk uploader, a spreadsheet template. Nobody asked the earlier question: how much of this work needs a person at all?</p>
+        <p class="measure">Shoot, rename, sort, retype what the photos already show, comp tabs, aspect fields, repeat for every item. Every tool we saw sped up the form. Nobody asked how much of the work needs a person at all.</p>
       </div>
     </div>
   </section>
@@ -532,7 +533,6 @@
             <li><strong>Retyping attributes.</strong> Brand, size, colour, and condition are visible in the shots.</li>
             <li><strong>Comp tabs.</strong> Pricing research is a query, not an afternoon.</li>
             <li><strong>Aspect roulette.</strong> Missing required fields should fail before eBay, with the field named.</li>
-            <li><strong>Copy-pasting policies.</strong> Payment, return, and fulfillment get set once per store.</li>
           </ul>
         </article>
         <article class="cut-card">
@@ -564,18 +564,8 @@
         </article>
         <article class="step">
           <span class="step__num" aria-hidden="true"></span>
-          <h3>Drop the photos</h3>
-          <p>Point FlipTide at the shoot folder. Photos upload straight to signed storage. FlipTide never touches the rest of the machine.</p>
-        </article>
-        <article class="step">
-          <span class="step__num" aria-hidden="true"></span>
-          <h3>Group into items</h3>
-          <p>Vision sorts the batch into items with front, back, and detail shots, and tells you what it couldn't place instead of guessing.</p>
-        </article>
-        <article class="step">
-          <span class="step__num" aria-hidden="true"></span>
-          <h3>Draft and price</h3>
-          <p>Title, aspects, and condition come from the images. Sold comps come back with the draft, so the price arrives with its evidence attached.</p>
+          <h3>Photos in, items out</h3>
+          <p>Point FlipTide at the shoot folder. Vision groups shots into items, drafts title and aspects from the images, and returns sold comps with the price.</p>
         </article>
         <article class="step">
           <span class="step__num" aria-hidden="true"></span>
@@ -586,23 +576,11 @@
     </div>
   </section>
 
-  <!-- 5. Why MCP -->
-  <section class="section section--tinted" aria-labelledby="mcp-title">
-    <div class="wrap split reveal">
-      <h2 id="mcp-title">The build decision</h2>
-      <div class="stack">
-        <p class="lead">We didn't build an app. Nobody needs another dashboard between them and eBay.</p>
-        <p class="measure">FlipTide ships as an MCP server. Resellers already have Cursor or Claude open; they add one URL and the tools appear where they're already working. No new login to learn, no tab to keep alive, no UI we have to maintain in place of the one they chose.</p>
-        <p class="measure">That is the same instinct as the process work. Remove the layer that only exists because software usually comes with one.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5b. Install MCP -->
-  <section class="section" id="install" aria-labelledby="install-title">
+  <!-- 5. Install MCP -->
+  <section class="section section--tinted" id="install" aria-labelledby="install-title">
     <div class="wrap reveal">
-      <h2 id="install-title">Add FlipTide where you already work</h2>
-      <p class="lead install__lead">FlipTide is a remote MCP server. Add the URL once in Cursor or Claude and the listing tools show up in the chat you already have open.</p>
+      <h2 id="install-title">Try FlipTide: add the MCP server</h2>
+      <p class="lead install__lead">No new app. Copy the config into Cursor, or paste the URL into Claude. Listing tools show up in the client you already have open.</p>
       <p class="install__env">Production MCP endpoint.</p>
 
       <div class="code-panel">
@@ -626,15 +604,15 @@
           <ol>
             <li>Open <strong>Cursor Settings</strong>, then <strong>MCP</strong>, and edit your config (or open <code>~/.cursor/mcp.json</code>).</li>
             <li>Merge the block above under <code>mcpServers</code>. Keep your other servers; add or replace the <code>fliptide</code> entry.</li>
-            <li>Save and reload the window if the FlipTide tools do not appear. Run connect when the assistant asks you to sign in to eBay.</li>
+            <li>Save and reload if tools do not appear. Sign in to eBay when the assistant prompts you.</li>
           </ol>
         </article>
         <article class="install-path">
           <h3>Claude</h3>
           <ol>
-            <li>In Claude (desktop or web), open settings for <strong>Connectors</strong> or <strong>MCP</strong> and add a custom remote server.</li>
-            <li>Paste this URL: <code>https://fliptide.parsync.io/mcp</code>. Claude does not use Cursor's <code>mcp.json</code> file; the URL is what both clients share.</li>
-            <li>Complete sign-in when prompted, then ask the assistant to run <code>ensure_account_ready</code> or <code>connect_ebay</code> to link your store.</li>
+            <li>Add a custom remote MCP server in Claude settings (<strong>Connectors</strong> or <strong>MCP</strong>).</li>
+            <li>Paste: <code>https://fliptide.parsync.io/mcp</code></li>
+            <li>After sign-in, ask the assistant to run <code>connect_ebay</code> or <code>ensure_account_ready</code>.</li>
           </ol>
         </article>
       </div>
@@ -684,40 +662,16 @@
         </article>
       </div>
 
-      <div class="price-rules">
-        <div>
-          <h3>Listings, not credits</h3>
-          <p>Model costs are ours to manage. You should never have to think about tokens to price your inventory.</p>
-        </div>
-        <div>
-          <h3>Publish is free</h3>
-          <p>Getting an item live never costs a unit. You are paying for the work that replaced typing.</p>
-        </div>
-        <div>
-          <h3>Overage matches your plan</h3>
-          <p>Extra listings bill at your plan's own rate. A good month shouldn't cost more per item than a slow one.</p>
-        </div>
-      </div>
+      <p class="price-lead price-lead--rules">You pay for listings, not tokens. Publishing and ending a listing are free. Overage bills at your plan rate.</p>
     </div>
   </section>
 
-  <!-- 7. What this says about the work -->
-  <section class="section" aria-labelledby="takeaway-title">
-    <div class="wrap split reveal">
-      <h2 id="takeaway-title">Why we shipped it ourselves</h2>
-      <div class="stack">
-        <p class="lead">FlipTide is Parsync's method run on our own bill.</p>
-        <p class="measure">We took a real operation, mapped every step, deleted the ones that shouldn't exist, and automated what was left. The pricing follows the same logic: bill the outcome the customer wanted, not the machinery it took to get there.</p>
-        <p class="measure">If your operation looks like that reseller's (work that accumulated rather than got designed), the engagement starts the same way it did here. One workflow, walked end to end.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. Final CTA -->
+  <!-- 7. Final CTA -->
   <section class="section section--open cta" aria-labelledby="cta-title">
     <div class="wrap reveal">
       <h2 id="cta-title">Same process, your operation.</h2>
       <p>Book a 30-minute process audit. We'll walk one workflow end to end and show you what shouldn't be there.</p>
+      <p class="measure cta__note">FlipTide is Parsync's method on our own bill. If your operation accumulated the same way, we start with one workflow, walked end to end.</p>
       <div class="cta__actions">
         <a class="btn" data-audit-link href="https://calendar.app.google/tk7x2NYHYPZq2wYJ7">Book a process audit</a>
         <a class="link-quiet" href="mailto:fi@parsync.io">fi@parsync.io</a>
