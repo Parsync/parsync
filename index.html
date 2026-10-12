@@ -175,6 +175,10 @@
   .btn:hover{background:var(--blue-tint)}
   .btn:focus-visible{outline:2px solid var(--white);outline-offset:3px}
   .btn--nav{min-height:44px;padding:.4rem 1.1rem;font-size:.875rem}
+  .btn--ghost{background:transparent;color:var(--white);border-color:var(--rule-strong)}
+  .btn--ghost:hover{background:transparent;border-color:var(--blue)}
+  .section--light .btn--ghost{color:var(--navy);border-color:var(--n-rule)}
+  .section--light .btn--ghost:hover{border-color:var(--blue)}
 
   .link-quiet{
     display:inline-flex;align-items:center;gap:.5rem;min-height:44px;
@@ -438,13 +442,71 @@
   .card--flagship svg{width:44px;height:44px}
   .card--flagship h3{font-size:var(--t-s);letter-spacing:-.03em}
   .card--flagship p{font-size:clamp(1.0625rem,1.6vw,1.1875rem);max-width:44ch}
-  .services__work{margin-top:clamp(1.75rem,3vw,2.5rem)}
   .card__tag{
     display:inline-block;
     padding:.3rem .6rem;border-radius:2px;
     background:var(--blue);color:var(--navy);
     font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   }
+
+  /* ---------- Work (proof) ---------- */
+  .work__grid{display:grid;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+  @media (min-width:48rem){
+    .work__grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,5rem)}
+  }
+  .work__panel{
+    padding:clamp(1.75rem,3.5vw,2.75rem);
+    border:1px solid var(--rule);border-radius:var(--radius);
+    border-top:3px solid var(--blue);
+    background:rgba(8,17,22,.35);
+  }
+  .work__lead{
+    font-size:clamp(1.0625rem,1.9vw,1.3125rem);
+    font-weight:300;color:var(--w-72);max-width:52ch;
+  }
+  .work__facts{
+    margin:clamp(1.5rem,3vw,2rem) 0 0;padding:0;list-style:none;
+    display:grid;gap:1rem;
+  }
+  .work__facts li{
+    padding-top:1rem;border-top:1px solid var(--rule);
+    font-size:.9375rem;color:var(--w-72);
+  }
+  .work__facts strong{color:var(--white);font-weight:600}
+  .work__actions{
+    display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.25rem;
+    margin-top:clamp(1.75rem,3vw,2.5rem);
+  }
+
+  /* ---------- Insights ---------- */
+  .insights__grid{
+    display:grid;gap:1px;margin-top:clamp(2rem,4vw,3rem);
+    background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);
+    overflow:hidden;
+  }
+  @media (min-width:48rem){
+    .insights__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  .insight-card{background:var(--navy);transition:background 200ms ease}
+  .insight-card:hover{background:rgba(80,143,255,.06)}
+  .insight-card a{
+    display:flex;flex-direction:column;min-height:100%;
+    padding:clamp(1.5rem,3vw,2rem);text-decoration:none;color:inherit;
+  }
+  .insight-card h3{
+    font-size:clamp(1.0625rem,1.7vw,1.25rem);
+    letter-spacing:-.02em;line-height:1.2;
+  }
+  .insight-card p{
+    margin-top:.75rem;flex:1;
+    font-size:.9375rem;color:var(--w-72);max-width:36ch;
+  }
+  .insight-card span{
+    margin-top:1.25rem;
+    font-size:.8125rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--blue);
+  }
+  .insights__more{margin-top:clamp(1.75rem,3vw,2.5rem)}
 
   /* ---------- 7. Why Parsync ---------- */
   .why__grid{display:grid;gap:clamp(2rem,5vw,4rem)}
@@ -598,8 +660,9 @@
     <a class="wordmark" href="#top" aria-label="Parsync, back to top">Parsync</a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#method">Method</a>
+      <a href="#work">Work</a>
       <a href="#services">Services</a>
-      <a href="/fliptide">Work</a>
+      <a href="#insights">Insights</a>
     </nav>
     <a class="btn btn--nav" data-audit-link href="https://calendar.app.google/tk7x2NYHYPZq2wYJ7">Book a process audit</a>
   </div>
@@ -712,6 +775,28 @@
     </div>
   </section>
 
+  <!-- 5b. Work -->
+  <section class="section section--tinted" id="work" aria-labelledby="work-title">
+    <div class="wrap work__grid reveal">
+      <div class="section__head">
+        <p class="eyebrow">Proof</p>
+        <h2 id="work-title">We pared a real operation, then automated what was left.</h2>
+      </div>
+      <div class="work__panel">
+        <p class="work__lead"><strong>FlipTide</strong> is Parsync on our own bill: high-volume eBay listing work cut back to the photo, with everything after it running inside Cursor or Claude.</p>
+        <ul class="work__facts">
+          <li><strong>Before:</strong> rename files, retype attributes, comp tabs, repeat for every item.</li>
+          <li><strong>After:</strong> shoot the folder, get grouped drafts and comp-backed prices back.</li>
+          <li><strong>Built as:</strong> an MCP server, not another dashboard between you and eBay.</li>
+        </ul>
+        <div class="work__actions">
+          <a class="btn" href="/fliptide">Read the case study</a>
+          <a class="btn btn--ghost" href="/fliptide#install">Try FlipTide setup</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 6. Services -->
   <section class="section section--light" id="services" aria-labelledby="services-title">
     <div class="wrap reveal">
@@ -763,8 +848,43 @@
           <p>Custom applications built for performance and integration.</p>
         </article>
       </div>
-      <p class="services__work">
-        <a class="link-quiet" href="/fliptide">FlipTide case study</a>
+    </div>
+  </section>
+
+  <!-- 6b. Insights -->
+  <section class="section" id="insights" aria-labelledby="insights-title">
+    <div class="wrap reveal">
+      <div class="section__head">
+        <p class="eyebrow">Insights</p>
+        <h2 id="insights-title">Where to begin with AI and automation</h2>
+      </div>
+      <p class="measure">Short reads for owners and operators who want modern tools but need a starting map, not another software tab.</p>
+
+      <div class="insights__grid">
+        <article class="insight-card">
+          <a href="/blog/where-to-begin-with-ai-and-automation.html">
+            <h3>Where to begin with AI and automation</h3>
+            <p>One workflow, walked end to end, before you buy another tool.</p>
+            <span>Read</span>
+          </a>
+        </article>
+        <article class="insight-card">
+          <a href="/blog/should-this-process-exist.html">
+            <h3>Should this process exist?</h3>
+            <p>The question most automation projects skip, and why it saves you money.</p>
+            <span>Read</span>
+          </a>
+        </article>
+        <article class="insight-card">
+          <a href="/blog/why-your-ai-pilot-stalled.html">
+            <h3>Why your AI pilot stalled</h3>
+            <p>When the process is broken, AI only speeds up the mess.</p>
+            <span>Read</span>
+          </a>
+        </article>
+      </div>
+      <p class="insights__more">
+        <a class="link-quiet" href="/blog/">All insights</a>
       </p>
     </div>
   </section>
