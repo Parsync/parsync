@@ -261,9 +261,32 @@
     font-weight:300;
     color:var(--w-72);
   }
+  .hero__terms{
+    display:grid;gap:1px;margin-top:clamp(1.75rem,3.5vw,2.5rem);
+    grid-template-columns:1fr;
+    background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);
+    overflow:hidden;
+  }
+  @media (min-width:40rem){
+    .hero__terms{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  .hero__concept{
+    padding:clamp(1.25rem,2.5vw,1.5rem);
+    background:var(--navy);
+  }
+  .hero__concept h3{
+    font-size:clamp(1.0625rem,1.7vw,1.25rem);
+    font-family:var(--display);
+    font-weight:700;
+    letter-spacing:-.02em;line-height:1.2;color:var(--white);
+  }
+  .hero__concept p{
+    margin-top:.65rem;
+    font-size:.9375rem;color:var(--w-72);max-width:36ch;line-height:1.55;
+  }
   .hero__actions{
     display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;
-    margin-top:clamp(2rem,4vw,2.75rem);
+    margin-top:clamp(1.75rem,3vw,2.25rem);
   }
 
   /* ---------- Hero motif: the kinetic system, stated once ---------- */
@@ -696,7 +719,19 @@
       <div>
         <p class="eyebrow">AI-Native Business Process Re-Engineering</p>
         <h1 id="hero-title">Pare the process. Automate in sync.</h1>
-        <p class="hero__sub">One workflow at a time: pare what should not exist, then sync what remains. For operators who need less firefighting and more room for strategy.</p>
+        <p class="hero__sub">Most operations were never designed; they accumulated. We start with the processes that have the most friction.</p>
+
+        <div class="hero__terms" aria-label="How we think about work">
+          <article class="hero__concept">
+            <h3>Pare</h3>
+            <p>Trim the workflow to essentials.</p>
+          </article>
+          <article class="hero__concept">
+            <h3>Sync</h3>
+            <p>Keep what remains in reliable step.</p>
+          </article>
+        </div>
+
         <div class="hero__actions">
           <a class="btn" data-audit-link href="https://calendar.app.google/tk7x2NYHYPZq2wYJ7">Book a process audit</a>
           <a class="link-quiet" href="#method">See the method <span aria-hidden="true">&#8595;</span></a>
@@ -762,8 +797,8 @@
         <article class="phase phase--pare">
           <span class="phase__num">01</span>
           <h3>Pare</h3>
-          <p class="phase__def">To cut to essentials.</p>
-          <p class="phase__body">A systematic review of every operational step. We remove what does not create value and challenge every assumption before we improve anything.</p>
+          <p class="phase__def">Trim the workflow to essentials.</p>
+          <p class="phase__body">Map every step, then remove duplicate tracking, dead approvals, and work that never changed an outcome. Automate only after that cut.</p>
         </article>
 
         <div class="connector" aria-hidden="true">
@@ -774,7 +809,7 @@
           <span class="phase__num">02</span>
           <h3>Sync</h3>
           <p class="phase__def">To keep in reliable step.</p>
-          <p class="phase__body">What remains is structured, mapped, and automated to run in lockstep across tools and teams, without a person standing in the middle holding it together.</p>
+          <p class="phase__body">What remains is structured, mapped, and automated to run in lockstep across tools and teams, with minimal human intervention except on high-risk tasks.</p>
         </article>
       </div>
 
