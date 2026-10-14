@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Should this process exist? | Parsync Insights</title>
-<meta name="description" content="The question most automation projects skip, and why it saves you money. Draft insight from Parsync.">
+<title>Pare the most painful process | Parsync Insights</title>
+<meta name="description" content="Start with the workflow that hurts most. Map it, remove what should not exist, then ask whether the process should exist at all before you automate.">
 <link rel="canonical" href="https://parsync.io/blog/should-this-process-exist.html">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23081116'/%3E%3Cg fill='%23508FFF'%3E%3Crect x='7' y='6' width='3.4' height='20'/%3E%3Crect x='7' y='6' width='16' height='3.4'/%3E%3Crect x='19.6' y='6' width='3.4' height='11'/%3E%3Crect x='7' y='13.6' width='16' height='3.4'/%3E%3C/g%3E%3C/svg%3E">
@@ -16,16 +16,18 @@
   @media (min-width:48rem){ :root{ --nav-h:70px; } }
   *,*::before,*::after{box-sizing:border-box}
   body{margin:0;background:var(--navy);color:var(--w-92);font-family:var(--text);font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased}
-  h1{margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.033em;line-height:1.05;color:var(--white);text-wrap:balance}
-  p{margin:0}a{color:inherit}
+  h1,h2{margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.033em;line-height:1.05;color:var(--white);text-wrap:balance}
+  p{margin:0}a{color:var(--blue);text-decoration:none;font-weight:600}
+  a:hover{text-decoration:underline}
+  a.link-quiet{color:inherit;font-weight:600;text-decoration:none;border-bottom:1px solid var(--rule-strong)}
+  a.link-quiet:hover{color:var(--white);border-color:var(--blue);text-decoration:none}
   :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
   .wrap{width:100%;max-width:1220px;margin:0 auto;padding-inline:var(--gutter)}
   .eyebrow{display:flex;align-items:flex-start;gap:.75rem;margin:0;font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--w-58)}
   .eyebrow::before{content:"";flex:none;width:28px;height:1px;margin-top:.6em;background:var(--blue)}
   .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.6rem 1.5rem;font-size:.9375rem;font-weight:600;text-decoration:none;border-radius:var(--radius);background:var(--blue);color:var(--navy)}
+  .btn:hover{background:var(--blue-tint);text-decoration:none}
   .btn--nav{min-height:44px;padding:.4rem 1.1rem;font-size:.875rem}
-  .link-quiet{display:inline-flex;align-items:center;min-height:44px;color:var(--w-72);text-decoration:none;border-bottom:1px solid var(--rule-strong);font-size:.9375rem;font-weight:600}
-  .link-quiet:hover{color:var(--white);border-color:var(--blue)}
   .nav{position:sticky;top:0;z-index:60;background:var(--navy);border-bottom:1px solid var(--rule)}
   .nav__inner{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.4rem 1rem;padding-block:.5rem}
   .wordmark{font-family:var(--display);font-size:1.3125rem;font-weight:800;letter-spacing:-.035em;color:var(--white);text-decoration:none}
@@ -35,10 +37,24 @@
   @media (min-width:48rem){.nav__inner{grid-template-columns:auto 1fr auto;padding-block:.6rem}.nav__inner .wordmark,.nav__inner .btn--nav,.nav__links{grid-row:1}.nav__inner .btn--nav{grid-column:3}.nav__links{grid-column:2;justify-content:center;gap:2rem}}
   .article{padding-block:clamp(3rem,8vw,5rem)}
   .article h1{margin-top:1.25rem;font-size:var(--t-hero);max-width:20ch}
+  .article__deck{margin-top:1rem;font-size:1.0625rem;font-weight:600;color:var(--w-72);max-width:var(--measure)}
   .article__meta{margin-top:1rem;font-size:.8125rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
   .article__body{margin-top:2rem;max-width:var(--measure)}
   .article__body>*+*{margin-top:1.25rem}
   .article__body .lead{font-size:clamp(1.125rem,2vw,1.3125rem);font-weight:300;color:var(--w-72)}
+  .article__body h2{font-size:1.375rem;margin-top:2.25rem;letter-spacing:-.025em}
+  .article__body ul{margin:1rem 0 0;padding-left:1.25rem;color:var(--w-72)}
+  .article__body li{margin-top:.5rem}
+  .glossary-mini{margin-top:2.5rem;padding:clamp(1.25rem,3vw,1.75rem);border:1px solid var(--rule);border-radius:var(--radius);background:rgba(80,143,255,.04)}
+  .glossary-mini h2{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-family:var(--text);font-weight:600;color:var(--w-58)}
+  .glossary-mini dl{margin-top:1rem}
+  .glossary-mini .glossary-mini__row+ .glossary-mini__row{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--rule)}
+  .glossary-mini dt{font-size:.9375rem;font-weight:600;color:var(--white)}
+  .glossary-mini dd{margin-top:.35rem;font-size:.9375rem;color:var(--w-72)}
+  .article__cta{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--rule)}
+  .article__cta p{color:var(--w-72)}
+  .article__cta .btn{margin-top:1.25rem}
+  .article__cta-links{margin-top:1rem;display:flex;flex-wrap:wrap;gap:1rem 1.5rem}
   .article__nav{margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:1rem 2rem}
   .footer{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,5vw,3.5rem);margin-top:clamp(3rem,8vw,5rem)}
   .footer__grid{display:grid;gap:1rem}
@@ -65,15 +81,98 @@
 <main>
   <article class="article wrap">
     <p class="eyebrow">Insights</p>
-    <h1>Should this process exist?</h1>
-    <p class="article__meta">Draft</p>
+    <h1>Pare the most painful process</h1>
+    <p class="article__deck">Then ask the sharper question: should this process exist?</p>
+    <p class="article__meta">Parsync · October 2026</p>
     <div class="article__body">
-      <p class="lead">This essay is in draft. It will expand on the question Parsync asks before any automation work: whether the workflow should exist at all.</p>
-      <p>Full copy coming soon.</p>
+      <p class="lead">When a workflow keeps hurting, the default response is to buy software. The cheaper response, and the one most vendors skip, is to map the pain first and remove what should not be there. Paring is how you earn the right to automate.</p>
+
+      <p>Every growing operation accumulates process debt the same way it accumulates tools: one urgent fix at a time. A spreadsheet because the CRM would not flex. A weekly standup because handoffs kept slipping. A double entry step because two departments never agreed on one system of record. None of it felt like a “process” when it was invented. Together it is the reason your team is tired.</p>
+
+      <p><strong>Pare the most painful process</strong> means you do not start with the easiest win or the loudest executive request. You start with the workflow where delay, error, or rework shows up in customer experience, revenue, or compliance. You document it with the people who live in it. Then you cut.</p>
+
+      <h2>How to pick the workflow</h2>
+      <p>Use pain that repeats on a clock, not pain from a one-off project. Good signals:</p>
+      <ul>
+        <li>The same exception gets escalated every week.</li>
+        <li>Two systems disagree and a human reconciles them manually.</li>
+        <li>New hires need a tribal-knowledge tour to do the job.</li>
+        <li>You have already bought a tool for this area and adoption stalled.</li>
+      </ul>
+      <p>That workflow becomes your <a href="/blog/glossary.html#process-audit">process audit</a> candidate. One chain, end to end. If you need a forcing function, ask: “Where would an extra hire go first?” That is often the painful process in disguise.</p>
+
+      <h2>Map before you measure ROI</h2>
+      <p>Teams rush to ROI models before they agree on steps. Map first:</p>
+      <ul>
+        <li>Trigger and done definition (what counts as finished?).</li>
+        <li>Each step, owner, and system touched.</li>
+        <li>Wait time versus touch time (where does work sit idle?).</li>
+        <li>Quality checks: where do errors get caught, and at what cost?</li>
+      </ul>
+      <p>You are not optimizing yet. You are making the invisible visible. When leaders see duplicate paths, the conversation changes from “we need AI” to “why do we do this twice?”</p>
+
+      <h2>Pare: remove steps that fail the existence test</h2>
+      <p><a href="/blog/glossary.html#pare">Paring</a> is deliberate removal. For each step, ask:</p>
+      <ul>
+        <li>If we stopped doing this, would a customer, auditor, or partner notice?</li>
+        <li>Does this step fix a problem we could eliminate upstream?</li>
+        <li>Is this reporting for a meeting that no longer decides anything?</li>
+        <li>Are we copying data the next system could read directly?</li>
+      </ul>
+      <p>Steps that fail those questions are candidates to delete, merge, or replace with a single source of truth. This is where money is saved before any license fee. It is also where trust is built with staff, because you are not automating their workaround; you are removing the reason the workaround existed.</p>
+
+      <h2>Should this process exist?</h2>
+      <p>Some workflows should not exist in their current form at all. They are compensating for a product decision, a policy nobody owns, or a handoff between teams that should be one team. Others should exist but are overloaded: too many approvals, too many formats, too many channels into the same queue.</p>
+      <p>Asking “should this process exist?” is not nihilism. It is scope control. If the answer is “yes, but not like this,” you redesign. If the answer is “only because we never integrated X and Y,” you fix the integration or the org boundary. If the answer is “no, but we’re required to,” you minimize and automate the proof, not the fantasy of value.</p>
+      <p>Skipping this question is how teams fund <a href="/blog/glossary.html#automation-theater">automation theater</a>: expensive motion with the same outcomes.</p>
+
+      <h2>What to keep human</h2>
+      <p>Paring is not “fire everyone and buy bots.” Some steps stay human because stakes are high: clinical judgement, contract language, brand voice on customer-facing sends, or anything where a wrong automatic action is expensive. Mark those as <a href="/blog/glossary.html#human-in-the-loop">human-in-the-loop</a> before you sync tools. Automation should prepare the packet; people should confirm the decision.</p>
+
+      <h2>After paring, sync</h2>
+      <p>What survives paring is smaller and honest. That is the right surface for <a href="/blog/glossary.html#sync">sync</a>: integrations, an <a href="/blog/glossary.html#ai-client">AI client</a> with the right access, or straightforward automation where the rules are stable. If you are evaluating AI vendors before paring, you are paying someone to encode chaos.</p>
+      <p>If you already ran a pilot that faded, the next read is <a href="/blog/why-your-ai-pilot-stalled.html">Why your AI pilot stalled</a>. If you are still choosing where to start, see <a href="/blog/where-to-begin-with-ai-and-automation.html">Where to begin with AI and automation</a>.</p>
+
+      <section class="glossary-mini" aria-labelledby="glossary-mini-title">
+        <h2 id="glossary-mini-title">Key terms in this article</h2>
+        <dl>
+          <div class="glossary-mini__row">
+            <dt><a href="/blog/glossary.html#pare">Pare</a></dt>
+            <dd>Remove steps that should not exist.</dd>
+          </div>
+          <div class="glossary-mini__row">
+            <dt><a href="/blog/glossary.html#process-audit">Process audit</a></dt>
+            <dd>One workflow walked end to end.</dd>
+          </div>
+          <div class="glossary-mini__row">
+            <dt><a href="/blog/glossary.html#workflow">Workflow</a></dt>
+            <dd>Repeatable chain of steps and handoffs.</dd>
+          </div>
+          <div class="glossary-mini__row">
+            <dt><a href="/blog/glossary.html#automation-theater">Automation theater</a></dt>
+            <dd>Modern tooling on top of broken or pointless work.</dd>
+          </div>
+          <div class="glossary-mini__row">
+            <dt><a href="/blog/glossary.html#human-in-the-loop">Human-in-the-loop</a></dt>
+            <dd>Explicit approval where stakes are high.</dd>
+          </div>
+        </dl>
+        <p style="margin-top:1rem;font-size:.9375rem"><a href="/blog/glossary.html">Full key terms glossary</a></p>
+      </section>
+
+      <div class="article__cta">
+        <p><strong>Next step.</strong> Bring your most painful workflow to a process audit. We will map it with you and show what to pare before anything gets automated.</p>
+        <a class="btn" href="https://calendar.app.google/tk7x2NYHYPZq2wYJ7">Book a process audit</a>
+        <div class="article__cta-links">
+          <a class="link-quiet" href="/#case-studies">Case studies</a>
+          <a class="link-quiet" href="/blog/glossary.html">Key terms</a>
+        </div>
+      </div>
     </div>
     <nav class="article__nav" aria-label="Post navigation">
+      <a class="link-quiet" href="/blog/where-to-begin-with-ai-and-automation.html">Previous: Where to begin</a>
+      <a class="link-quiet" href="/blog/why-your-ai-pilot-stalled.html">Next: Why your AI pilot stalled</a>
       <a class="link-quiet" href="/blog/">All insights</a>
-      <a class="link-quiet" href="/">Parsync home</a>
     </nav>
   </article>
 </main>
@@ -81,7 +180,7 @@
   <div class="wrap footer__grid">
     <p><a class="wordmark" href="/">Parsync</a></p>
     <p class="footer__tagline">Pare the process. Automate in sync.</p>
-    <div class="footer__meta"><a href="mailto:fi@parsync.io">fi@parsync.io</a><span>&#169; 2026 Parsync.</span></div>
+    <div class="footer__meta"><a href="mailto:info@parsync.io">info@parsync.io</a><span>&#169; 2026 Parsync.</span></div>
   </div>
 </footer>
 </body>
