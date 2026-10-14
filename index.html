@@ -449,34 +449,49 @@
     font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   }
 
-  /* ---------- Work (proof) ---------- */
-  .work__grid{display:grid;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+  /* ---------- Case studies ---------- */
+  .cases__intro{max-width:58ch;margin-top:clamp(1.25rem,2.5vw,1.75rem);color:var(--w-72);font-weight:300;font-size:clamp(1.0625rem,1.9vw,1.3125rem)}
+  .cases__grid{
+    display:grid;gap:1px;margin-top:clamp(2.5rem,5vw,3.5rem);
+    background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);
+    overflow:hidden;
+  }
   @media (min-width:48rem){
-    .work__grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,5rem)}
+    .cases__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
-  .work__panel{
-    padding:clamp(1.75rem,3.5vw,2.75rem);
-    border:1px solid var(--rule);border-radius:var(--radius);
-    border-top:3px solid var(--blue);
+  .case-card{
+    display:flex;flex-direction:column;min-height:100%;
+    padding:clamp(1.75rem,3.5vw,2.5rem);
     background:rgba(8,17,22,.35);
+    border-top:3px solid var(--blue);
   }
-  .work__lead{
-    font-size:clamp(1.0625rem,1.9vw,1.3125rem);
-    font-weight:300;color:var(--w-72);max-width:52ch;
+  .case-card__tag{
+    margin:0;font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--w-58);
   }
-  .work__facts{
-    margin:clamp(1.5rem,3vw,2rem) 0 0;padding:0;list-style:none;
-    display:grid;gap:1rem;
+  .case-card h3{
+    margin-top:1rem;font-size:clamp(1.25rem,2.2vw,1.5rem);
+    letter-spacing:-.025em;line-height:1.15;max-width:22ch;
   }
-  .work__facts li{
-    padding-top:1rem;border-top:1px solid var(--rule);
-    font-size:.9375rem;color:var(--w-72);
+  .case-card__line{
+    margin-top:1rem;flex:1;font-size:.9375rem;color:var(--w-72);max-width:42ch;line-height:1.6;
   }
-  .work__facts strong{color:var(--white);font-weight:600}
-  .work__actions{
-    display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.25rem;
-    margin-top:clamp(1.75rem,3vw,2.5rem);
+  .case-card__badges{
+    display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;
   }
+  .case-card__badges span{
+    padding:.35rem .65rem;border-radius:2px;
+    border:1px solid var(--rule);background:var(--blue-04);
+    font-size:.6875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--w-72);
+  }
+  .case-card__cta{margin-top:clamp(1.5rem,3vw,2rem)}
+  .cases__close{
+    margin-top:clamp(2.5rem,5vw,3.5rem);
+    padding-top:clamp(2rem,4vw,2.75rem);
+    border-top:1px solid var(--rule);
+    text-align:center;
+  }
+  .cases__close p{max-width:42ch;margin:0 auto;color:var(--w-72);font-size:1rem}
+  .cases__close .btn{margin-top:1.25rem}
 
   /* ---------- Insights ---------- */
   .insights__grid{
@@ -660,7 +675,7 @@
     <a class="wordmark" href="#top" aria-label="Parsync, back to top">Parsync</a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#method">Method</a>
-      <a href="#work">Work</a>
+      <a href="#case-studies">Case studies</a>
       <a href="#services">Services</a>
       <a href="#insights">Insights</a>
     </nav>
@@ -775,24 +790,44 @@
     </div>
   </section>
 
-  <!-- 5b. Work -->
-  <section class="section section--tinted" id="work" aria-labelledby="work-title">
-    <div class="wrap work__grid reveal">
+  <!-- 5b. Case studies -->
+  <section class="section section--tinted" id="case-studies" aria-labelledby="case-studies-title">
+    <div class="wrap reveal">
       <div class="section__head">
-        <p class="eyebrow">Proof</p>
-        <h2 id="work-title">We pared a real operation, then automated what was left.</h2>
+        <p class="eyebrow">Case studies</p>
+        <h2 id="case-studies-title">Real operational bottlenecks. Pared first, then synced.</h2>
       </div>
-      <div class="work__panel">
-        <p class="work__lead"><strong>FlipTide</strong> is Parsync on our own bill: high-volume eBay listing work cut back to the photo, with everything after it running inside Cursor or Claude.</p>
-        <ul class="work__facts">
-          <li><strong>Before:</strong> rename files, retype attributes, comp tabs, repeat for every item.</li>
-          <li><strong>After:</strong> shoot the folder, get grouped drafts and comp-backed prices back.</li>
-          <li><strong>Built as:</strong> an MCP server, not another dashboard between you and eBay.</li>
-        </ul>
-        <div class="work__actions">
-          <a class="btn" href="/fliptide">Read the case study</a>
-          <a class="btn btn--ghost" href="/fliptide#install">Try FlipTide setup</a>
-        </div>
+      <p class="cases__intro">You name the workflow where time and errors pile up. We map it end to end, remove steps that do not need to exist, and automate the rest. Two recent builds:</p>
+
+      <div class="cases__grid">
+        <article class="case-card">
+          <p class="case-card__tag">Product · Commerce ops</p>
+          <h3>Reselling: listing work tied to the photo</h3>
+          <p class="case-card__line">Each item required renaming files, re-entering attributes, and checking comps in separate tabs. The process was reduced to capture at the shoot; listing, pricing, and publish run from that input.</p>
+          <div class="case-card__badges" aria-label="Scope">
+            <span>Shipped product</span>
+            <span>MCP integration</span>
+            <span>No separate ops dashboard</span>
+          </div>
+          <p class="case-card__cta"><a class="btn" href="/fliptide">Read case study</a></p>
+        </article>
+
+        <article class="case-card">
+          <p class="case-card__tag">Healthcare · Skilled nursing</p>
+          <h3>Referral admission processing</h3>
+          <p class="case-card__line">Discharge referrals arrived on a payer portal, by fax, and by email. Intake was split across logins and spreadsheets. We mapped the lanes, built one desk queue, and connected document intake, clinical packet summaries, and eligibility checks with staff review at each step.</p>
+          <div class="case-card__badges" aria-label="Scope">
+            <span>Multi-channel intake</span>
+            <span>Eligibility verification</span>
+            <span>Staff review gates</span>
+          </div>
+          <p class="case-card__cta"><a class="btn" href="/skilled-nursing-referrals">Read case study</a></p>
+        </article>
+      </div>
+
+      <div class="cases__close">
+        <p>Same starting point for your operation: one workflow, walked end to end.</p>
+        <a class="btn" data-audit-link href="https://calendar.app.google/tk7x2NYHYPZq2wYJ7">Book a process audit</a>
       </div>
     </div>
   </section>
@@ -911,8 +946,6 @@
       <a href="mailto:fi@parsync.io">fi@parsync.io</a>
       <span class="footer__handle">@parsync</span>
       <a href="https://linkedin.com/company/parsync">LinkedIn</a>
-      <a href="https://instagram.com/parsync">Instagram</a>
-      <a href="https://x.com/parsync">X</a>
       <span>&#169; 2026 Parsync.</span>
     </div>
   </div>
