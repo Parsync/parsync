@@ -499,8 +499,11 @@
     background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);
     overflow:hidden;
   }
-  @media (min-width:48rem){
-    .insights__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (min-width:40rem){
+    .insights__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (min-width:64rem){
+    .insights__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
   }
   .insight-card{background:var(--navy);transition:background 200ms ease}
   .insight-card:hover{background:rgba(80,143,255,.06)}
@@ -521,7 +524,10 @@
     font-size:.8125rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
     color:var(--blue);
   }
-  .insights__more{margin-top:clamp(1.75rem,3vw,2.5rem)}
+  .insights__more{
+    margin-top:clamp(1.75rem,3vw,2.5rem);
+    display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;
+  }
 
   /* ---------- 7. Why Parsync ---------- */
   .why__grid{display:grid;gap:clamp(2rem,5vw,4rem)}
@@ -891,15 +897,15 @@
     <div class="wrap reveal">
       <div class="section__head">
         <p class="eyebrow">Insights</p>
-        <h2 id="insights-title">Where to begin with AI and automation</h2>
+        <h2 id="insights-title">How work is changing, and where to start</h2>
       </div>
-      <p class="measure">Short reads for owners and operators who want modern tools but need a starting map, not another software tab.</p>
+      <p class="measure">Short reads on paring operations first, then using AI clients as workflow multipliers: context, integrations, and one mapped process at a time. Not another software tab.</p>
 
       <div class="insights__grid">
         <article class="insight-card">
           <a href="/blog/where-to-begin-with-ai-and-automation.html">
             <h3>Where to begin with AI and automation</h3>
-            <p>One workflow, walked end to end, before you buy another tool.</p>
+            <p>One workflow, walked end to end, before you buy tools or launch a pilot.</p>
             <span>Read</span>
           </a>
         </article>
@@ -913,14 +919,22 @@
         <article class="insight-card">
           <a href="/blog/why-your-ai-pilot-stalled.html">
             <h3>Why your AI pilot stalled</h3>
-            <p>When the process is broken, AI only speeds up the mess.</p>
+            <p>Broken process, missing context, no integrations: why chat in a tab is not a workflow.</p>
             <span>Read</span>
           </a>
         </article>
+        <article class="insight-card">
+          <a href="/blog/glossary.html">
+            <h3>Key terms</h3>
+            <p>AI clients, context engineering, MCP, process audits, and paring workflows.</p>
+            <span>Reference</span>
+          </a>
+        </article>
       </div>
-      <p class="insights__more">
+      <div class="insights__more">
         <a class="link-quiet" href="/blog/">All insights</a>
-      </p>
+        <a class="link-quiet" href="/blog/glossary.html">Key terms</a>
+      </div>
     </div>
   </section>
 
