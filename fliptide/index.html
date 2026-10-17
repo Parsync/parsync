@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FlipTide | Parsync case study</title>
-<meta name="description" content="Resellers spend their day typing, not selling. Parsync pared eBay listing work down to the photo, then synced the rest. FlipTide turns a folder of photos into grouped, drafted, comp-priced eBay listings inside Cursor or Claude.">
+<meta name="description" content="Resellers spend their day typing, not selling. Parsync pared eBay listing work down to the photo, then synced the rest. FlipTide turns a folder of photos into grouped, drafted, comp-priced eBay listings in Claude, ChatGPT, or any MCP app.">
 <link rel="canonical" href="https://parsync.io/fliptide">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#081116">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Parsync">
 <meta property="og:url" content="https://parsync.io/fliptide">
 <meta property="og:title" content="FlipTide | Parsync case study">
-<meta property="og:description" content="Parsync pared eBay listing work down to the photo, then synced the rest. A folder of photos becomes grouped, drafted, comp-priced listings inside Cursor or Claude.">
+<meta property="og:description" content="Parsync pared eBay listing work down to the photo, then synced the rest. A folder of photos becomes grouped, drafted, comp-priced listings in Claude, ChatGPT, or any MCP app.">
 <meta property="og:locale" content="en_US">
 
 <meta name="twitter:card" content="summary">
@@ -342,27 +342,45 @@
     -webkit-overflow-scrolling:touch;
   }
   .code-panel__pre code{font:inherit;color:inherit;white-space:pre}
-  .install-paths{
-    display:grid;gap:clamp(1.5rem,3vw,2rem);
-    margin-top:clamp(2rem,4vw,3rem);
+  .install__actions{
+    display:flex;flex-wrap:wrap;gap:1rem;
+    margin-top:clamp(2rem,4vw,2.75rem);
   }
-  @media (min-width:64rem){
-    .install-paths{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,3vw,2.5rem)}
+  .install__alt{
+    margin-top:clamp(3rem,6vw,4rem);
+    padding-top:clamp(2rem,4vw,2.75rem);
+    border-top:1px solid var(--rule);
   }
-  .install-path{
-    border-top:2px solid var(--blue);
-    padding-top:clamp(1.25rem,2.5vw,1.5rem);
+  .install__alt h3{font-size:var(--t-s);letter-spacing:-.025em}
+  .install__alt .lead{margin-top:1rem;max-width:58ch}
+  .install-url-row{
+    display:flex;flex-wrap:wrap;align-items:stretch;gap:.75rem;
+    margin-top:clamp(1.25rem,2.5vw,1.75rem);
   }
-  .install-path h3{font-size:1.125rem;letter-spacing:-.01em}
-  .install-path ol{
-    margin:1rem 0 0;padding-left:1.25rem;
-    color:var(--w-72);
+  .install-url-row label{
+    flex:1 1 100%;
+    font-size:.6875rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--w-58);
   }
-  .install-path li{margin-top:.65rem;max-width:52ch}
-  .install-path li:first-child{margin-top:0}
-  .install-path code{
+  .install-url-row input{
+    flex:1 1 16rem;min-width:0;min-height:48px;
+    padding:.65rem 1rem;
     font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-    font-size:.9em;color:var(--blue);word-break:break-all;
+    font-size:clamp(.8125rem,1.6vw,.9375rem);font-weight:600;
+    color:var(--w-92);
+    background:rgba(8,17,22,.55);
+    border:1px solid var(--rule);border-radius:var(--radius);
+  }
+  .install__cursor{margin-top:clamp(2rem,4vw,2.75rem)}
+  .install__cursor summary{
+    cursor:pointer;font-weight:600;color:var(--w-72);
+    list-style:none;
+  }
+  .install__cursor summary::-webkit-details-marker{display:none}
+  .install__cursor[open] summary{color:var(--white)}
+  .install__cursor .code-panel{margin-top:1rem}
+  .install__footnote{
+    margin-top:1rem;font-size:1rem;color:var(--w-72);max-width:58ch;
   }
 
   /* ---------- Pricing (light) ---------- */
@@ -493,7 +511,7 @@
         </div>
         <div class="fact">
           <dt>Built as</dt>
-          <dd>MCP server: runs inside Cursor or Claude, no new app</dd>
+          <dd>MCP server: Claude Connectors, ChatGPT, or any MCP app, no new app</dd>
         </div>
         <div class="fact">
           <dt>Status</dt>
@@ -572,44 +590,63 @@
     </div>
   </section>
 
-  <!-- 5. Install MCP -->
+  <!-- 5. Install (aligned with fliptide.io) -->
   <section class="section section--tinted" id="install" aria-labelledby="install-title">
     <div class="wrap reveal">
-      <h2 id="install-title">Try FlipTide: add the MCP server</h2>
-      <p class="lead install__lead">No new app. Copy the config into Cursor, or paste the URL into Claude. Listing tools show up in the client you already have open.</p>
+      <h2 id="install-title">Add FlipTide. Connect eBay. Start listing.</h2>
+      <p class="lead install__lead">Three steps. No code, no spreadsheets.</p>
 
-      <div class="code-panel">
-        <div class="code-panel__head">
-          <span class="code-panel__label">Cursor: merge into mcp.json</span>
-          <button type="button" class="btn btn--copy" data-copy-mcp>Copy config</button>
+      <div class="flow">
+        <article class="step">
+          <span class="step__num" aria-hidden="true"></span>
+          <h3>Add FlipTide to Claude</h3>
+          <p>In Claude, open <strong>Connectors</strong>, search FlipTide, and tap <strong>Connect</strong>.</p>
+        </article>
+        <article class="step">
+          <span class="step__num" aria-hidden="true"></span>
+          <h3>Connect your eBay store</h3>
+          <p>Sign in on eBay&apos;s own page. You do it once, and it carries across every chat.</p>
+        </article>
+        <article class="step">
+          <span class="step__num" aria-hidden="true"></span>
+          <h3>Send photos, then publish</h3>
+          <p>Drop in your photos, review the drafts, and tell Claude to publish when you are ready.</p>
+        </article>
+      </div>
+
+      <div class="install__actions">
+        <a class="btn" href="https://claude.ai/settings/connectors" target="_blank" rel="noopener noreferrer">Add FlipTide to Claude</a>
+        <a class="link-quiet" href="https://fliptide.io/#install" target="_blank" rel="noopener noreferrer">Full setup on fliptide.io</a>
+      </div>
+
+      <div class="install__alt">
+        <h3>Not on Claude? FlipTide works with ChatGPT too.</h3>
+        <p class="lead">Add this URL as a connector in ChatGPT or any app that supports MCP. Or paste it into the chat and ask your assistant to set it up.</p>
+
+        <div class="install-url-row">
+          <label for="mcp-url">FlipTide MCP URL</label>
+          <input id="mcp-url" type="text" readonly value="https://fliptide.io/mcp" aria-describedby="copy-mcp-status">
+          <button type="button" class="btn btn--copy" data-copy-mcp-url>Copy URL</button>
         </div>
-        <pre class="code-panel__pre" id="mcp-config"><code>{
+        <p class="sr-only" id="copy-mcp-status" aria-live="polite"></p>
+
+        <details class="install__cursor">
+          <summary>Using Cursor or another MCP client</summary>
+          <div class="code-panel">
+            <div class="code-panel__head">
+              <span class="code-panel__label">Merge into mcp.json under mcpServers</span>
+              <button type="button" class="btn btn--copy" data-copy-mcp-config>Copy config</button>
+            </div>
+            <pre class="code-panel__pre" id="mcp-config"><code>{
   "mcpServers": {
     "fliptide": {
-      "url": "https://fliptide.parsync.io/mcp"
+      "url": "https://fliptide.io/mcp"
     }
   }
 }</code></pre>
-        <p class="sr-only" id="copy-mcp-status" aria-live="polite"></p>
-      </div>
-
-      <div class="install-paths">
-        <article class="install-path">
-          <h3>Cursor</h3>
-          <ol>
-            <li>Open <strong>Cursor Settings</strong>, then <strong>MCP</strong>, and edit your config (or open <code>~/.cursor/mcp.json</code>).</li>
-            <li>Merge the block above under <code>mcpServers</code>. Keep your other servers; add or replace the <code>fliptide</code> entry.</li>
-            <li>Save and reload if tools do not appear. Sign in to eBay when the assistant prompts you.</li>
-          </ol>
-        </article>
-        <article class="install-path">
-          <h3>Claude</h3>
-          <ol>
-            <li>Add a custom remote MCP server in Claude settings (<strong>Connectors</strong> or <strong>MCP</strong>).</li>
-            <li>Paste: <code>https://fliptide.parsync.io/mcp</code></li>
-            <li>After sign-in, ask the assistant to run <code>connect_ebay</code> or <code>ensure_account_ready</code>.</li>
-          </ol>
-        </article>
+          </div>
+          <p class="install__footnote">After tools appear, sign in to eBay when the assistant prompts you. Nothing publishes without your confirmation.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -744,17 +781,15 @@
     for (var k = 0; k < reveals.length; k++) observer.observe(reveals[k]);
   }
 
-  /* Copy MCP config (enhancement only; block stays selectable without JS) */
-  var copyBtn = document.querySelector("[data-copy-mcp]");
-  var configEl = document.getElementById("mcp-config");
-  var copyStatus = document.getElementById("copy-mcp-status");
-  if (copyBtn && configEl) {
-    copyBtn.addEventListener("click", function () {
-      var text = configEl.textContent;
+  function wireCopy(button, getText) {
+    if (!button) return;
+    var copyStatus = document.getElementById("copy-mcp-status");
+    button.addEventListener("click", function () {
+      var text = getText();
       function done(ok) {
-        if (copyStatus) copyStatus.textContent = ok ? "Config copied." : "Copy failed. Select the block and copy manually.";
-        copyBtn.classList.toggle("is-copied", ok);
-        if (ok) window.setTimeout(function () { copyBtn.classList.remove("is-copied"); }, 2000);
+        if (copyStatus) copyStatus.textContent = ok ? "Copied." : "Copy failed. Select the text and copy manually.";
+        button.classList.toggle("is-copied", ok);
+        if (ok) window.setTimeout(function () { button.classList.remove("is-copied"); }, 2000);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
@@ -763,6 +798,14 @@
       }
     });
   }
+  var mcpUrlEl = document.getElementById("mcp-url");
+  wireCopy(document.querySelector("[data-copy-mcp-url]"), function () {
+    return mcpUrlEl ? mcpUrlEl.value : "https://fliptide.io/mcp";
+  });
+  var configEl = document.getElementById("mcp-config");
+  wireCopy(document.querySelector("[data-copy-mcp-config]"), function () {
+    return configEl ? configEl.textContent : "";
+  });
 })();
 </script>
 </body>
